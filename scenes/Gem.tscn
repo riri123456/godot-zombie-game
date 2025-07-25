@@ -1,0 +1,77 @@
+[gd_scene load_steps=10 format=3 uid="uid://cwxspd8lu6ifb"]
+
+[ext_resource type="Script" path="res://scenes/Gem.gd" id="1_st00i"]
+[ext_resource type="Texture2D" uid="uid://8fpqr18au1ip" path="res://assets/mystic_woods_free_2.2/sprites/objects/chest_01.png" id="1_x3db6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_knmju"]
+atlas = ExtResource("1_x3db6")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mvfgk"]
+atlas = ExtResource("1_x3db6")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xv7mw"]
+atlas = ExtResource("1_x3db6")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h8ags"]
+atlas = ExtResource("1_x3db6")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wj4tc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_knmju")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mvfgk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xv7mw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h8ags")
+}],
+"loop": false,
+"name": &"Chest_open",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w7tx7"]
+size = Vector2(27, 27)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8ykj7"]
+size = Vector2(25, 25)
+
+[node name="Gem" type="Node2D"]
+script = ExtResource("1_st00i")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 1.9375)
+sprite_frames = SubResource("SpriteFrames_wj4tc")
+animation = &"Chest_open"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-0.5, -0.5)
+shape = SubResource("RectangleShape2D_w7tx7")
+
+[node name="GemColl" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GemColl"]
+position = Vector2(-0.5, -0.5)
+shape = SubResource("RectangleShape2D_8ykj7")
+
+[node name="GemHealth" type="Label" parent="."]
+offset_left = -28.0
+offset_top = -14.0
+offset_right = 82.0
+offset_bottom = 9.0
+scale = Vector2(0.3, 0.4)
+theme_override_colors/font_color = Color(1, 0.318249, 0.253521, 1)
+text = "GEM HEALTH: "
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

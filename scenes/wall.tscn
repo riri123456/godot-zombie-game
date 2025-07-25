@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxf261yco7xsa"]
+
+[ext_resource type="Texture2D" uid="uid://drww6f41a5ylx" path="res://assets/mystic_woods_free_2.2/sprites/tilesets/fenceclear.png" id="1_psngi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6boca"]
+size = Vector2(120, 34)
+
+[node name="Wall" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(0, 7)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, -6)
+scale = Vector2(0.2, 0.2)
+shape = SubResource("RectangleShape2D_6boca")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_psngi")
+region_enabled = true
+region_rect = Rect2(8, 0, 120, 82)

@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://b117ixvsko5o6"]
+
+[ext_resource type="Texture2D" uid="uid://coibq0w67x54q" path="res://assets/(high-res) 10 swords/high-res stone sword.png" id="1_jnuod"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0cbhc"]
+size = Vector2(6, 26.75)
+
+[node name="Sword" type="Area2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0.0343245, -13.6714)
+rotation = -0.785398
+scale = Vector2(0.142892, 0.139434)
+texture = ExtResource("1_jnuod")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -14.625)
+shape = SubResource("RectangleShape2D_0cbhc")
