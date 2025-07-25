@@ -1,6 +1,5 @@
 extends RigidBody2D
-# HELLLOOOOOO
-#helllooooo
+
 
 func _ready():
 	var mob_types = Array($AnimatedSprite2D.sprite_frames.get_animation_names())
