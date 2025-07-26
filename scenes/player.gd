@@ -13,10 +13,14 @@ extends CharacterBody2D
 
 @onready var weaponcoll = $Weapon/Sword/CollisionShape2D
 
+var nonEnemies : Array = ['GemColl', 'Player', 'WallColl']
+
+
 var attack: bool = false
 var screenSize
 
 func get_input():
+
 	var input_direction = Input.get_vector("Left", "Right", "Forward", "Down")
 	velocity = input_direction * SPEED
 	
@@ -71,13 +75,15 @@ signal hit
 
 func _on_hurtbox_body_entered(body):
 	#print(body.name)
-	if body.name != 'GemColl' and body.name != 'Player':
+	if body.name not in nonEnemies:
 		hit.emit()
-		
-func Playerpos():
-	Playerpost = position.x
 
-		
+
+
+signal position_changed(position)
+
+func _process(delta):
+	emit_signal("position_changed", self.global_position)
 		
 
 		

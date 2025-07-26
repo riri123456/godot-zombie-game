@@ -7,7 +7,7 @@ extends Node2D
 @onready var killCount : int = 0
 @onready var gem_health : int = 100
 @onready var player : CharacterBody2D = $Player
-#@onready var spawnpoint = player.global_position
+#@onready var spawnpoint = $Player.global_position
 
 func _ready():
 	pass
@@ -15,7 +15,9 @@ func _ready():
 
 func _process(delta):
 	game_over()
-	Build()
+	build()
+	#_on_player_position_changed(position)
+
 	
 
 
@@ -30,6 +32,7 @@ func game_over():
 		gem_health = 100
 		$Player/PlayerCollision.set_deferred(&"disabled", true)
 		get_tree().call_group(&"mobs", &"queue_free")
+		#wall_scene.queue_free()
 		
 	
 	
@@ -66,14 +69,25 @@ func killed():
 	EnemyDead.emit()
 	#print(killCount)
 
-func Build():
-	if Input.is_action_pressed("Build"):
-		var wall = wall_scene.instantiate()
-		#wall.position = Playerpos.position.x + 5
-#		print(spawnpoint)
-		add_child(wall)
-		
+
 
 func _on_gem_gemhit():
 	gem_health -= 10
 	print(gem_health)
+
+
+func _on_player_position_changed(position):
+	var wallpos = Vector2(20, 0)
+	var player_new_position = player.position
+	print(player_new_position)
+	
+	
+func build():
+	if Input.is_action_just_released("Build"):
+		var mousepos = get_global_mouse_position()
+		#print(mousepos)
+		var wall = wall_scene.instantiate()
+		wall.position = mousepos
+		print(wall.position)
+		#wall.rotation = player.rotation
+		add_child(wall)

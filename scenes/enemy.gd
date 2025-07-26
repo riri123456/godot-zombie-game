@@ -39,3 +39,7 @@ func _on_hitbox_enemy_area_entered(area):
 		queue_free()
 		get_node("/root/Main").killed()
 
+
+
+
+	
