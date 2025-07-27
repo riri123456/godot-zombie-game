@@ -80,10 +80,10 @@ func _on_hurtbox_body_entered(body):
 
 
 
-signal position_changed(position)
+#signal position_changed(position)
 
-func _process(delta):
-	emit_signal("position_changed", self.global_position)
+#func _process(delta):
+#	emit_signal("position_changed", self.global_position) finds player position and sends signal
 		
 
 		
