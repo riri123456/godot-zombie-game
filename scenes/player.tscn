@@ -1,7 +1,7 @@
 [gd_scene load_steps=67 format=3 uid="uid://cyj3apdujpl7w"]
 
 [ext_resource type="Texture2D" uid="uid://copakpslto5o5" path="res://assets/mystic_woods_free_2.2/sprites/characters/player.png" id="1_1763l"]
-[ext_resource type="Script" path="res://scenes/player.gd" id="1_w5yq2"]
+[ext_resource type="Script" uid="uid://buad4poi615ih" path="res://scenes/player.gd" id="1_w5yq2"]
 [ext_resource type="Texture2D" uid="uid://c1h0uo43ctagj" path="res://assets/mystic_woods_free_2.2/sprites/characters/player copy.png" id="2_1ipsq"]
 [ext_resource type="PackedScene" uid="uid://b117ixvsko5o6" path="res://scenes/sword.tscn" id="4_n7t3l"]
 
@@ -628,11 +628,11 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_m2ba7"]
 _data = {
-"RESET": SubResource("Animation_6xkin"),
-"attackDown": SubResource("Animation_8fxnc"),
-"attackLeft": SubResource("Animation_fm1vt"),
-"attackRight": SubResource("Animation_dp4r8"),
-"attackUp": SubResource("Animation_5q2p4")
+&"RESET": SubResource("Animation_6xkin"),
+&"attackDown": SubResource("Animation_8fxnc"),
+&"attackLeft": SubResource("Animation_fm1vt"),
+&"attackRight": SubResource("Animation_dp4r8"),
+&"attackUp": SubResource("Animation_5q2p4")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7p301"]
@@ -656,7 +656,7 @@ shape = SubResource("RectangleShape2D_lho1m")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Weapon")
 libraries = {
-"": SubResource("AnimationLibrary_m2ba7")
+&"": SubResource("AnimationLibrary_m2ba7")
 }
 
 [node name="Weapon" type="Node2D" parent="."]

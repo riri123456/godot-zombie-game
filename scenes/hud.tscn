@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dvpbpyqh1rbbn"]
 
-[ext_resource type="Script" path="res://scenes/hud.gd" id="1_836p8"]
+[ext_resource type="Script" uid="uid://dgxgbam6x3fnh" path="res://scenes/hud.gd" id="1_836p8"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_fll2u"]
 action = &"start_game"

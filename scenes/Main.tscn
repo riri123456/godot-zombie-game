@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://btwygw8uf2qjj"]
 
-[ext_resource type="Script" path="res://scenes/Main.gd" id="1_842s1"]
+[ext_resource type="Script" uid="uid://pbvt3psojm5g" path="res://scenes/Main.gd" id="1_842s1"]
 [ext_resource type="Texture2D" uid="uid://ynqubvv88yan" path="res://assets/Pixel Lands Forest Demo/forest_demo_objects.png" id="1_nf3p7"]
 [ext_resource type="PackedScene" uid="uid://hbytjywv1vm8" path="res://scenes/enemy.tscn" id="2_i1iq7"]
 [ext_resource type="Texture2D" uid="uid://bqvx1xr8cmr7e" path="res://assets/Pixel Lands Forest Demo/forest_demo_terrain.png" id="2_rk16w"]
@@ -167,7 +167,6 @@ _data = {
 point_count = 5
 
 [node name="Main" type="Node2D"]
-position = Vector2(374, 311)
 script = ExtResource("1_842s1")
 enemy_scene = ExtResource("2_i1iq7")
 
