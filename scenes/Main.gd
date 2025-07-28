@@ -8,6 +8,7 @@ extends Node2D
 @onready var gem_health : int = 100
 @onready var player : CharacterBody2D = $Player
 @onready var inGem : bool = false
+@onready var gameStart : bool = false
 #@onready var Gemm = $Gem/Area2D/CollisionShape2D.shape.height
 #@onready var spawnpoint = $Player.global_position
 
@@ -22,6 +23,7 @@ func _process(delta):
 
 func game_over():
 	if health == 0 or health < 0 or gem_health <= 0:
+		gameStart = false
 		$MobTimer.stop()
 		$HUD.show_game_over()
 		$Player.hide()
@@ -35,6 +37,7 @@ func game_over():
 	
 	
 func new_game():  
+	gameStart = true
 	$Player.start($StartPosition.position)
 	$StartTimer.start()
 	$HUD.show_message("Get Ready")
@@ -77,24 +80,21 @@ func _on_gem_gemhit():
 #func _on_player_position_changed(position):
 	#var player_new_position = player.position  #finds player pos
 
-func _on_gem_mouse_exit(inGem):
+func _on_gem_mouse_exit():
 	inGem = false
-	#print('false')
 
 
-func _on_gem_mouse_enter(inGem):
+
+func _on_gem_mouse_enter():
 	inGem = true
-	#print('true')
+
 
 	
 func build():
 	var mousepos = get_global_mouse_position()
-	if Input.is_action_just_released("Build"):
-		print(inGem)
-		if inGem == false:
-			print(inGem)
-			var wall = wall_scene.instantiate()
-			wall.position = mousepos
-			#wall.rotation = player.rotation
-			add_child(wall)
+	if Input.is_action_just_released("Build") and inGem == false and gameStart == true: 
+		var wall = wall_scene.instantiate()
+		wall.position = mousepos
+		#wall.rotation = player.rotation
+		add_child(wall)
 	

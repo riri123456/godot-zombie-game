@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cwxspd8lu6ifb"]
+[gd_scene load_steps=11 format=3 uid="uid://cwxspd8lu6ifb"]
 
 [ext_resource type="Script" uid="uid://c2i4vaaf07jk" path="res://scenes/Gem.gd" id="1_st00i"]
 [ext_resource type="Texture2D" uid="uid://8fpqr18au1ip" path="res://assets/mystic_woods_free_2.2/sprites/objects/chest_01.png" id="1_x3db6"]
@@ -45,6 +45,9 @@ size = Vector2(27, 27)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ykj7"]
 size = Vector2(25, 25)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o8oug"]
+size = Vector2(48, 43)
+
 [node name="Gem" type="Node2D"]
 script = ExtResource("1_st00i")
 
@@ -53,9 +56,9 @@ scale = Vector2(2, 1.9375)
 sprite_frames = SubResource("SpriteFrames_wj4tc")
 animation = &"Chest_open"
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Gemhit" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gemhit"]
 position = Vector2(-0.5, -0.5)
 shape = SubResource("RectangleShape2D_w7tx7")
 
@@ -74,6 +77,12 @@ scale = Vector2(0.3, 0.4)
 theme_override_colors/font_color = Color(1, 0.318249, 0.253521, 1)
 text = "GEM HEALTH: "
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
-[connection signal="mouse_entered" from="GemColl" to="." method="_on_area_2d_mouse_entered"]
-[connection signal="mouse_exited" from="GemColl" to="." method="_on_area_2d_mouse_exited"]
+[node name="Gemmouse" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Gemmouse"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_o8oug")
+
+[connection signal="body_entered" from="Gemhit" to="." method="_on_area_2d_body_entered"]
+[connection signal="mouse_entered" from="Gemmouse" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Gemmouse" to="." method="_on_area_2d_mouse_exited"]

@@ -25,12 +25,11 @@ func _on_hud_start_game():
 	
 signal mouseEnter
 func _on_area_2d_mouse_entered():
-	inGem = false
-	emit_signal("mouseEnter", inGem)
-	print('yes')
+	inGem = true
+	mouseEnter.emit()
+
 									# Checking if mouse inside gem 
 signal mouseExit
 func _on_area_2d_mouse_exited():
 	inGem = false
-	emit_signal("mouseExit", inGem)
-	print('youou')
+	mouseExit.emit()
