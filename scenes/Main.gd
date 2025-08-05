@@ -32,8 +32,9 @@ func game_over():
 	
 func new_game():  
 	gameStart = true
-	$Player.start($StartPosition.position)
-	$StartTimer.start()
+	#$Player.start($StartPosition.position)
+	#$StartTimer.start()
+	$MobTimer.start()
 	$HUD.show_message("Get Ready")
 	$Player.show()
 	gem_health = 100
@@ -50,8 +51,8 @@ func _on_mob_timer_timeout():
 	add_child(mob)
 	
 	
-func _on_start_timer_timeout():
-	$MobTimer.start()
+#func _on_start_timer_timeout():
+	#$MobTimer.start()
 	
 	
 func _on_player_hit():

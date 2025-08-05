@@ -198,7 +198,7 @@ wait_time = 2.0
 one_shot = true
 
 [node name="MobTimer" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 2.5
 
 [node name="StartPosition" type="Marker2D" parent="."]
 position = Vector2(74, -31)
@@ -219,6 +219,7 @@ position = Vector2(-6, 1)
 [connection signal="hit" from="Player" to="HUD" method="Onhit"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
 [connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
+[connection signal="collectionTimer" from="HUD" to="." method="_on_collection_timer"]
 [connection signal="start_game" from="HUD" to="." method="new_game"]
 [connection signal="start_game" from="HUD" to="Gem" method="_on_hud_start_game"]
 [connection signal="Gemhit" from="Gem" to="." method="_on_gem_gemhit"]
