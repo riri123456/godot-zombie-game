@@ -28,7 +28,7 @@ func _on_area_2d_mouse_entered():
 	inGem = true
 	mouseEnter.emit()
 
-									# Checking if mouse inside gem 
+# Checking if mouse inside gem V^
 signal mouseExit
 func _on_area_2d_mouse_exited():
 	inGem = false

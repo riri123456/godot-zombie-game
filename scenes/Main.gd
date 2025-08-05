@@ -3,23 +3,17 @@ extends Node2D
 @export var enemy_scene : PackedScene
 @onready var wall_scene = preload('res://scenes/wall.tscn')
 @onready var health : int = 100
-#@onready var PlayerColl = $Player/PlayerCollision
 @onready var killCount : int = 0
 @onready var gem_health : int = 100
 @onready var player : CharacterBody2D = $Player
 @onready var inGem : bool = false
 @onready var gameStart : bool = false
-#@onready var Gemm = $Gem/Area2D/CollisionShape2D.shape.height
-#@onready var spawnpoint = $Player.global_position
 
-func _ready():
-#	print(Gemm)
-	pass
 
 func _process(delta):
 	game_over()
 	build()
-	#print(inGem)
+
 
 func game_over():
 	if health == 0 or health < 0 or gem_health <= 0:
@@ -80,16 +74,7 @@ func _on_gem_gemhit():
 #func _on_player_position_changed(position):
 	#var player_new_position = player.position  #finds player pos
 
-func _on_gem_mouse_exit():
-	inGem = false
 
-
-
-func _on_gem_mouse_enter():
-	inGem = true
-
-
-	
 func build():
 	var mousepos = get_global_mouse_position()
 	if Input.is_action_just_released("Build") and inGem == false and gameStart == true: 
@@ -98,3 +83,8 @@ func build():
 		#wall.rotation = player.rotation
 		add_child(wall)
 	
+func _on_gem_mouse_exit():
+	inGem = false
+
+func _on_gem_mouse_enter():
+	inGem = true
