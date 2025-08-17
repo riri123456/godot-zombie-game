@@ -8,6 +8,7 @@ extends Node2D
 @onready var player : CharacterBody2D = $Player
 @onready var inGem : bool = false
 @onready var gameStart : bool = false
+@onready var beforeGame : bool = true
 
 
 func _process(delta):
@@ -32,7 +33,7 @@ func game_over():
 	
 func new_game():  
 	gameStart = true
-	#$Player.start($StartPosition.position)
+	#
 	#$StartTimer.start()
 	$MobTimer.start()
 	$HUD.show_message("Get Ready")
@@ -78,7 +79,7 @@ func _on_gem_gemhit():
 
 func build():
 	var mousepos = get_global_mouse_position()
-	if Input.is_action_just_released("Build") and inGem == false and gameStart == true: 
+	if Input.is_action_just_released("Build") and inGem == false and beforeGame == false: 
 		var wall = wall_scene.instantiate()
 		wall.position = mousepos
 		#wall.rotation = player.rotation
@@ -89,3 +90,8 @@ func _on_gem_mouse_exit():
 
 func _on_gem_mouse_enter():
 	inGem = true
+
+
+func _on_hud_start_button():
+	beforeGame = false
+	$Player.start($StartPosition.position)

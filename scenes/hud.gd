@@ -27,8 +27,9 @@ func show_game_over():
 	$startButton.show()
 	
 
-
+signal start_button
 func _on_start_button_pressed():
+	start_button.emit()
 	health = 100
 	Main.killCount = 0
 	$health.text = 'HEALTH: ' + str(health)

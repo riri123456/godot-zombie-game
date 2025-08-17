@@ -220,6 +220,7 @@ position = Vector2(-6, 1)
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
 [connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
 [connection signal="collectionTimer" from="HUD" to="." method="_on_collection_timer"]
+[connection signal="start_button" from="HUD" to="." method="_on_hud_start_button"]
 [connection signal="start_game" from="HUD" to="." method="new_game"]
 [connection signal="start_game" from="HUD" to="Gem" method="_on_hud_start_game"]
 [connection signal="Gemhit" from="Gem" to="." method="_on_gem_gemhit"]
