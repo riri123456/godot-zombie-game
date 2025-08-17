@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://btwygw8uf2qjj"]
+[gd_scene load_steps=13 format=4 uid="uid://btwygw8uf2qjj"]
 
 [ext_resource type="Script" uid="uid://pbvt3psojm5g" path="res://scenes/Main.gd" id="1_842s1"]
 [ext_resource type="Texture2D" uid="uid://ynqubvv88yan" path="res://assets/Pixel Lands Forest Demo/forest_demo_objects.png" id="1_nf3p7"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cyj3apdujpl7w" path="res://scenes/player.tscn" id="3_1amtg"]
 [ext_resource type="PackedScene" uid="uid://dvpbpyqh1rbbn" path="res://scenes/hud.tscn" id="6_g1rjm"]
 [ext_resource type="PackedScene" uid="uid://cwxspd8lu6ifb" path="res://scenes/Gem.tscn" id="7_buolf"]
+[ext_resource type="PackedScene" uid="uid://vxuwrdcyj3fd" path="res://scenes/tree.tscn" id="8_jlsqs"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2hef3"]
 texture = ExtResource("1_nf3p7")
@@ -214,6 +215,9 @@ position = Vector2(-527, -311)
 [node name="Gem" parent="." instance=ExtResource("7_buolf")]
 position = Vector2(-6, 1)
 
+[node name="Tree" parent="." instance=ExtResource("8_jlsqs")]
+position = Vector2(72, 39)
+
 [connection signal="EnemyDead" from="." to="HUD" method="_on_main_enemy_dead"]
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
 [connection signal="hit" from="Player" to="HUD" method="Onhit"]
@@ -226,3 +230,4 @@ position = Vector2(-6, 1)
 [connection signal="Gemhit" from="Gem" to="." method="_on_gem_gemhit"]
 [connection signal="mouseEnter" from="Gem" to="." method="_on_gem_mouse_enter"]
 [connection signal="mouseExit" from="Gem" to="." method="_on_gem_mouse_exit"]
+[connection signal="area_entered" from="Tree" to="." method="_on_tree_area_entered"]

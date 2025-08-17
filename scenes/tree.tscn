@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://vxuwrdcyj3fd"]
+
+[ext_resource type="Texture2D" uid="uid://co5xv0c8moeim" path="res://assets/Pixel Lands Forest Demo/tree.png" id="1_avsvi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_avsvi"]
+size = Vector2(70, 105)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_avsvi"]
+radius = 15.0
+height = 180.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vplca"]
+size = Vector2(125, 100)
+
+[node name="Tree" type="Area2D"]
+scale = Vector2(0.2, 0.2)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_avsvi")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 85)
+scale = Vector2(0.999999, 0.999999)
+shape = SubResource("RectangleShape2D_avsvi")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-10, 125)
+rotation = 1.57278
+scale = Vector2(1, 1)
+shape = SubResource("CapsuleShape2D_avsvi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2.5, 85)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_vplca")

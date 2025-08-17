@@ -95,3 +95,10 @@ func _on_gem_mouse_enter():
 func _on_hud_start_button():
 	beforeGame = false
 	$Player.start($StartPosition.position)
+
+
+func _on_tree_area_entered(area: Area2D):
+	print(area.name)
+	if area.name == 'Sword':
+		print('hello')
+		$Tree.queue_free()
