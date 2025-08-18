@@ -10,6 +10,7 @@ extends Node2D
 @onready var gameStart : bool = false
 @onready var beforeGame : bool = true
 @onready var tree_scene = preload('res://scenes/tree.tscn')
+@onready var wood : int = 0
 
 
 func _process(delta):
@@ -44,8 +45,9 @@ func new_game():
 	$Player.show()
 	gem_health = 100
 	# after waves move tree stuff somewhere else
-	tree_spawn()
-	
+
+func test():
+	pass
 	
 func tree_spawn():
 	for i in range(0, 10):
@@ -53,6 +55,7 @@ func tree_spawn():
 		var tree_location_x = randf_range(-505, 760)
 		var tree_location_y = randf_range(-295, 330)
 		tre.position = Vector2i(tree_location_x, tree_location_y)
+		tre.name = 'Trees'
 		add_child(tre)
 
 	
@@ -110,3 +113,14 @@ func _on_gem_mouse_enter():
 func _on_hud_start_button():
 	beforeGame = false
 	$Player.start($StartPosition.position)
+	tree_spawn()
+	
+
+	
+
+
+func _on_child_exiting_tree(node: Node) -> void:
+	pass
+	#if node.name == tree_scene:
+	#	wood += 5
+	#	print(wood)

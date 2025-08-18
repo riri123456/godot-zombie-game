@@ -217,6 +217,7 @@ position = Vector2(-527, -311)
 position = Vector2(-6, 1)
 
 [connection signal="EnemyDead" from="." to="HUD" method="_on_main_enemy_dead"]
+[connection signal="child_exiting_tree" from="." to="." method="_on_child_exiting_tree"]
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
 [connection signal="hit" from="Player" to="HUD" method="Onhit"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
