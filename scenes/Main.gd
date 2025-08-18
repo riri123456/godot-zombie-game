@@ -9,11 +9,13 @@ extends Node2D
 @onready var inGem : bool = false
 @onready var gameStart : bool = false
 @onready var beforeGame : bool = true
+@onready var tree_scene = preload('res://scenes/tree.tscn')
 
 
 func _process(delta):
 	game_over()
 	build()
+	
 
 
 func game_over():
@@ -28,6 +30,8 @@ func game_over():
 		$Player/PlayerCollision.set_deferred(&"disabled", true)
 		get_tree().call_group(&"mobs", &"queue_free")
 		get_tree().call_group(&"Obstacles", &"queue_free")
+		get_tree().call_group(&"Trees", &"queue_free")
+		
 		
 	
 	
@@ -39,8 +43,18 @@ func new_game():
 	$HUD.show_message("Get Ready")
 	$Player.show()
 	gem_health = 100
+	# after waves move tree stuff somewhere else
+	tree_spawn()
 	
 	
+func tree_spawn():
+	for i in range(0, 10):
+		var tre = tree_scene.instantiate()
+		var tree_location_x = randf_range(-505, 760)
+		var tree_location_y = randf_range(-295, 330)
+		tre.position = Vector2i(tree_location_x, tree_location_y)
+		add_child(tre)
+
 	
 func _on_mob_timer_timeout():
 	var mob = enemy_scene.instantiate()
@@ -50,6 +64,7 @@ func _on_mob_timer_timeout():
 	mob.position = mob_spawn_location.position
 	
 	add_child(mob)
+	print(player.position)
 	
 	
 #func _on_start_timer_timeout():
@@ -95,10 +110,3 @@ func _on_gem_mouse_enter():
 func _on_hud_start_button():
 	beforeGame = false
 	$Player.start($StartPosition.position)
-
-
-func _on_tree_area_entered(area: Area2D):
-	print(area.name)
-	if area.name == 'Sword':
-		print('hello')
-		$Tree.queue_free()

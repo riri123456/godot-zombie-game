@@ -12,7 +12,7 @@ events = [SubResource("InputEventAction_fll2u")]
 script = ExtResource("1_836p8")
 
 [node name="CollectionTimer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 2.0
 one_shot = true
 
 [node name="CollectionTime" type="Label" parent="."]
