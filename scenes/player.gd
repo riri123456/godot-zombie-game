@@ -13,7 +13,7 @@ extends CharacterBody2D
 
 @onready var weaponcoll = $Weapon/Sword/CollisionShape2D
 
-var nonEnemies : Array = ['GemColl', 'Player', 'WallColl']
+var nonEnemies : Array = ['GemColl', 'Player', 'WallColl', 'StaticBody2D']
 
 
 var attack: bool = false
@@ -77,6 +77,7 @@ func _on_hurtbox_body_entered(body):
 	#print(body.name)
 	if body.name not in nonEnemies:
 		hit.emit()
+
 
 
 

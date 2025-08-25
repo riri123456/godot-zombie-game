@@ -84,6 +84,18 @@ offset_bottom = 84.0
 theme_override_font_sizes/font_size = 60
 text = "SCORE: 0"
 
+[node name="Wood" type="Label" parent="."]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -114.0
+offset_right = 114.0
+offset_bottom = 83.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 60
+text = "WOOD: "
+
 [connection signal="timeout" from="CollectionTimer" to="." method="_on_collection_timer_timeout"]
 [connection signal="pressed" from="startButton" to="." method="_on_start_button_pressed"]
 [connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]

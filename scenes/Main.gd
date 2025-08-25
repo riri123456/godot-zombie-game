@@ -5,7 +5,7 @@ extends Node2D
 @onready var health : int = 100
 @onready var killCount : int = 0
 @onready var gem_health : int = 100
-@onready var player : CharacterBody2D = $Player
+#@onready var player : CharacterBody2D = $Player
 @onready var inGem : bool = false
 @onready var gameStart : bool = false
 @onready var beforeGame : bool = true
@@ -18,7 +18,6 @@ func _process(delta):
 	build()
 	
 
-
 func game_over():
 	if health == 0 or health < 0 or gem_health <= 0:
 		gameStart = false
@@ -28,6 +27,7 @@ func game_over():
 		health = 100
 		killCount = 0
 		gem_health = 100
+		wood = 0
 		$Player/PlayerCollision.set_deferred(&"disabled", true)
 		get_tree().call_group(&"mobs", &"queue_free")
 		get_tree().call_group(&"Obstacles", &"queue_free")
@@ -38,16 +38,14 @@ func game_over():
 	
 func new_game():  
 	gameStart = true
-	#
 	#$StartTimer.start()
 	$MobTimer.start()
 	$HUD.show_message("Get Ready")
 	$Player.show()
+	wood = 0
 	gem_health = 100
 	# after waves move tree stuff somewhere else
 
-func test():
-	pass
 	
 func tree_spawn():
 	for i in range(0, 10):
@@ -67,7 +65,7 @@ func _on_mob_timer_timeout():
 	mob.position = mob_spawn_location.position
 	
 	add_child(mob)
-	print(player.position)
+	#print(player.position)
 	
 	
 #func _on_start_timer_timeout():
@@ -94,12 +92,15 @@ func _on_gem_gemhit():
 #func _on_player_position_changed(position):
 	#var player_new_position = player.position  #finds player pos
 
-
+signal wall_built
 func build():
 	var mousepos = get_global_mouse_position()
-	if Input.is_action_just_released("Build") and inGem == false and beforeGame == false: 
+	if Input.is_action_just_released("Build") and inGem == false and beforeGame == false and wood > 1: 
 		var wall = wall_scene.instantiate()
 		wall.position = mousepos
+		print(wood)
+		wood -= 2
+		wall_built.emit()
 		#wall.rotation = player.rotation
 		add_child(wall)
 	
@@ -113,14 +114,14 @@ func _on_gem_mouse_enter():
 func _on_hud_start_button():
 	beforeGame = false
 	$Player.start($StartPosition.position)
+	wood = 0
 	tree_spawn()
 	
 
 	
 
-
+signal tree_chopped
 func _on_child_exiting_tree(node: Node) -> void:
-	pass
-	#if node.name == tree_scene:
-	#	wood += 5
-	#	print(wood)
+	if node.is_in_group('Trees'):
+		tree_chopped.emit()
+		wood += 5

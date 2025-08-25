@@ -3,6 +3,7 @@ extends CanvasLayer
 signal start_game
 
 @onready var health : int = 100
+@onready var wood : int = 0
 
 func _process(_delta):
 	EnemyDead()
@@ -17,6 +18,7 @@ func show_game_over():
 	show_message("Game Over")
 	$health.hide()
 	$Score.hide()
+	$Wood.hide()
 	# Wait until the MessageTimer has counted down.
 	await $MessageTimer.timeout
 
@@ -31,6 +33,8 @@ signal start_button
 func _on_start_button_pressed():
 	start_button.emit()
 	health = 100
+	wood = 0
+	$Wood.text = 'WOOD: ' + str(wood)
 	Main.killCount = 0
 	$health.text = 'HEALTH: ' + str(health)
 	$Score.text = 'SCORE: ' + str(Main.killCount) 
@@ -41,6 +45,7 @@ func _on_start_button_pressed():
 	$Message.hide()
 	$health.show()
 	$Score.show()
+	$Wood.show()
 	$CollectionTime.show()
 	await $CollectionTimer.timeout
 	$CollectionTime.hide()
@@ -64,3 +69,16 @@ signal collectionTimer
 func _on_collection_timer_timeout():
 	collectionTimer.emit()
 	
+
+
+
+
+func _on_main_tree_chopped() -> void:
+	wood += 5
+	$Wood.text = 'WOOD: ' + str(wood)
+	
+
+
+func _on_main_wall_built() -> void:
+	wood -= 2
+	$Wood.text = 'WOOD: ' + str(wood)
