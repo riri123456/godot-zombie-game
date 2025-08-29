@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://c4jgrt78p0df1"]
+
+[ext_resource type="Script" uid="uid://bf3ve0g6n7y54" path="res://scenes/prev_wall.gd" id="1_jsgj5"]
+[ext_resource type="Texture2D" uid="uid://bpo3b4pfxbrq" path="res://assets/mystic_woods_free_2.2/sprites/objects/goodWall.png" id="1_vo1wf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vo1wf"]
+size = Vector2(24.5088, 8.15945)
+
+[node name="prevWall" type="Node2D"]
+script = ExtResource("1_jsgj5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_vo1wf")
+
+[node name="wallColl" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wallColl"]
+position = Vector2(-0.18174, 1.75042)
+shape = SubResource("RectangleShape2D_vo1wf")

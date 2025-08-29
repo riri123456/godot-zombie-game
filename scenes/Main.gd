@@ -1,7 +1,8 @@
 extends Node2D
 
 @export var enemy_scene : PackedScene
-@onready var wall_scene = preload('res://scenes/wall.tscn')
+@export var wall_scene : PackedScene
+@export var preview_wall : PackedScene
 @onready var health : int = 100
 @onready var killCount : int = 0
 @onready var gem_health : int = 100
@@ -11,6 +12,9 @@ extends Node2D
 @onready var beforeGame : bool = true
 @onready var tree_scene = preload('res://scenes/tree.tscn')
 @onready var wood : int = 0
+@onready var building_mode : bool = false
+@onready var preview_wall_node : bool = false
+var prevWall: Node2D = null
 
 
 func _process(delta):
@@ -48,7 +52,7 @@ func new_game():
 
 	
 func tree_spawn():
-	for i in range(0, 10):
+	for i in range(0, 50):
 		var tre = tree_scene.instantiate()
 		var tree_location_x = randf_range(-505, 760)
 		var tree_location_y = randf_range(-295, 330)
@@ -86,23 +90,54 @@ func killed():
 
 func _on_gem_gemhit():
 	gem_health -= 10
-	print(gem_health)
+	#print(gem_health)
 
 
 #func _on_player_position_changed(position):
 	#var player_new_position = player.position  #finds player pos
+	
+
+
 
 signal wall_built
 func build():
 	var mousepos = get_global_mouse_position()
-	if Input.is_action_just_released("Build") and inGem == false and beforeGame == false and wood > 1: 
+	if Input.is_action_just_released("Build") and inGem == false and beforeGame == false and wood > 1 and building_mode == false:
+		building_mode = true
+		prevWall = preview_wall.instantiate()
+		add_child(prevWall)
+		print('prev')
+	if Input.is_action_just_released("wall rotation") and building_mode == true:
+		prevWall.rotation_degrees += 90.0
+		print('rotate')
+	if Input.is_action_just_released('delete_build') and building_mode == true:
+		prevWall.queue_free()
+		building_mode = false
+	if Input.is_action_just_released("test") and building_mode == true and inGem == false and beforeGame == false and wood > 1:
 		var wall = wall_scene.instantiate()
-		wall.position = mousepos
-		print(wood)
+		print(prevWall.position)
+		wall.position = prevWall.position
+		wall.rotation = prevWall.rotation
+		prevWall.queue_free()
 		wood -= 2
 		wall_built.emit()
-		#wall.rotation = player.rotation
 		add_child(wall)
+		print('wall')
+		prevWall = preview_wall.instantiate()
+		add_child(prevWall)
+		print("new preview wall ready")
+		
+			# YOOO TRYNA ADD A PREVIEW WALL
+			#var wall = wall_scene.instantiate()
+			#wall.modulate = Color(0, 1, 1, 1)
+			#wall.position = mousepos
+			#var wall_rotation = Input.is_action_pressed('wall rotation')
+			#wall.rotation = 1.55
+		#wall.rotation = mousepos.rotation
+		#print(wood)
+			#wood -= 2
+			#wall_built.emit()
+			#add_child(wall)
 	
 func _on_gem_mouse_exit():
 	inGem = false

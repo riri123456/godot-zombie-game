@@ -1,22 +1,33 @@
-[gd_scene load_steps=3 format=3 uid="uid://cxf261yco7xsa"]
+[gd_scene load_steps=5 format=3 uid="uid://cxf261yco7xsa"]
 
-[ext_resource type="Texture2D" uid="uid://drww6f41a5ylx" path="res://assets/mystic_woods_free_2.2/sprites/tilesets/fenceclear.png" id="1_psngi"]
+[ext_resource type="Script" uid="uid://c84jwm3xlkstd" path="res://scenes/wall.gd" id="1_2ktk7"]
+[ext_resource type="Texture2D" uid="uid://bpo3b4pfxbrq" path="res://assets/mystic_woods_free_2.2/sprites/objects/goodWall.png" id="2_2ktk7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6boca"]
-size = Vector2(120, 34)
+size = Vector2(120.954, 34)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e00m8"]
+size = Vector2(24.3266, 7.5)
 
 [node name="Wall" type="Node2D" groups=["Obstacles"]]
+script = ExtResource("1_2ktk7")
 
 [node name="WallColl" type="StaticBody2D" parent="."]
 position = Vector2(0, 7)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallColl"]
-position = Vector2(0, -6)
+position = Vector2(-0.293929, -5.90025)
 scale = Vector2(0.2, 0.2)
 shape = SubResource("RectangleShape2D_6boca")
 
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-0.283648, 1.03906)
+shape = SubResource("RectangleShape2D_e00m8")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.2, 0.2)
-texture = ExtResource("1_psngi")
-region_enabled = true
-region_rect = Rect2(8, 0, 120, 82)
+texture = ExtResource("2_2ktk7")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

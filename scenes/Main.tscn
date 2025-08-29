@@ -1,10 +1,12 @@
-[gd_scene load_steps=12 format=4 uid="uid://btwygw8uf2qjj"]
+[gd_scene load_steps=14 format=4 uid="uid://btwygw8uf2qjj"]
 
 [ext_resource type="Script" uid="uid://pbvt3psojm5g" path="res://scenes/Main.gd" id="1_842s1"]
 [ext_resource type="Texture2D" uid="uid://ynqubvv88yan" path="res://assets/Pixel Lands Forest Demo/forest_demo_objects.png" id="1_nf3p7"]
 [ext_resource type="PackedScene" uid="uid://hbytjywv1vm8" path="res://scenes/enemy.tscn" id="2_i1iq7"]
 [ext_resource type="Texture2D" uid="uid://bqvx1xr8cmr7e" path="res://assets/Pixel Lands Forest Demo/forest_demo_terrain.png" id="2_rk16w"]
 [ext_resource type="PackedScene" uid="uid://cyj3apdujpl7w" path="res://scenes/player.tscn" id="3_1amtg"]
+[ext_resource type="PackedScene" uid="uid://cxf261yco7xsa" path="res://scenes/wall.tscn" id="3_jlsqs"]
+[ext_resource type="PackedScene" uid="uid://c4jgrt78p0df1" path="res://scenes/prev_wall.tscn" id="4_q8u5g"]
 [ext_resource type="PackedScene" uid="uid://dvpbpyqh1rbbn" path="res://scenes/hud.tscn" id="6_g1rjm"]
 [ext_resource type="PackedScene" uid="uid://cwxspd8lu6ifb" path="res://scenes/Gem.tscn" id="7_buolf"]
 
@@ -169,6 +171,8 @@ point_count = 5
 [node name="Main" type="Node2D"]
 script = ExtResource("1_842s1")
 enemy_scene = ExtResource("2_i1iq7")
+wall_scene = ExtResource("3_jlsqs")
+preview_wall = ExtResource("4_q8u5g")
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(34, -7)
