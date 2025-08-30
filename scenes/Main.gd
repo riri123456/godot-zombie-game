@@ -15,7 +15,8 @@ extends Node2D
 @onready var building_mode : bool = false
 @onready var preview_wall_node : bool = false
 var prevWall: Node2D = null
-
+@onready var wave : int = 0
+@onready var mob_stopper : int
 
 func _process(delta):
 	game_over()
@@ -41,6 +42,7 @@ func game_over():
 	
 	
 func new_game():  
+	wave += 1
 	gameStart = true
 	#$StartTimer.start()
 	$MobTimer.start()
@@ -60,20 +62,18 @@ func tree_spawn():
 		tre.name = 'Trees'
 		add_child(tre)
 
-	
+signal end_wave
 func _on_mob_timer_timeout():
+	mob_stopper += 1
 	var mob = enemy_scene.instantiate()
 	var mob_spawn_location = $MobPath/MobSpawnLocation
 	mob_spawn_location.progress_ratio = randf()
-	
 	mob.position = mob_spawn_location.position
-	
 	add_child(mob)
-	#print(player.position)
-	
-	
-#func _on_start_timer_timeout():
-	#$MobTimer.start()
+	if mob_stopper == wave * 10:
+		$MobTimer.stop()
+	if killCount == wave * 10:
+		end_wave.emit()
 	
 	
 func _on_player_hit():
@@ -84,7 +84,7 @@ signal EnemyDead
 func killed():
 	killCount += 1
 	EnemyDead.emit()
-	#print(killCount)
+	print(killCount)
 
 
 
@@ -122,10 +122,8 @@ func build():
 		wood -= 2
 		wall_built.emit()
 		add_child(wall)
-		print('wall')
 		prevWall = preview_wall.instantiate()
 		add_child(prevWall)
-		print("new preview wall ready")
 		
 			# YOOO TRYNA ADD A PREVIEW WALL
 			#var wall = wall_scene.instantiate()
