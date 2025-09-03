@@ -16,7 +16,7 @@ extends Node2D
 @onready var preview_wall_node : bool = false
 var prevWall: Node2D = null
 @onready var wave : int = 0
-@onready var mob_stopper : int
+@onready var mob_counter : int
 
 func _process(delta):
 	game_over()
@@ -33,6 +33,7 @@ func game_over():
 		killCount = 0
 		gem_health = 100
 		wood = 0
+		wave = 0
 		$Player/PlayerCollision.set_deferred(&"disabled", true)
 		get_tree().call_group(&"mobs", &"queue_free")
 		get_tree().call_group(&"Obstacles", &"queue_free")
@@ -43,14 +44,13 @@ func game_over():
 	
 func new_game():  
 	wave += 1
+	print('new game wave is ' + str(wave))
 	gameStart = true
 	#$StartTimer.start()
 	$MobTimer.start()
 	$HUD.show_message("Get Ready")
 	$Player.show()
-	wood = 0
 	gem_health = 100
-	# after waves move tree stuff somewhere else
 
 	
 func tree_spawn():
@@ -62,39 +62,31 @@ func tree_spawn():
 		tre.name = 'Trees'
 		add_child(tre)
 
-signal end_wave
+
 func _on_mob_timer_timeout():
-	mob_stopper += 1
+	mob_counter += 1
 	var mob = enemy_scene.instantiate()
 	var mob_spawn_location = $MobPath/MobSpawnLocation
 	mob_spawn_location.progress_ratio = randf()
 	mob.position = mob_spawn_location.position
 	add_child(mob)
-	if mob_stopper == wave * 10:
+	var waveMulti = (wave+2) * (wave+1)
+	#print('onmob wave multi is ' + str(waveMulti))
+	#print('onmob wave is ' + str(wave))
+	if mob_counter == waveMulti:
 		$MobTimer.stop()
-	if killCount == wave * 10:
-		end_wave.emit()
+
 	
 	
 func _on_player_hit():
 	health -= 10
 	#print(health)
 
-signal EnemyDead
-func killed():
-	killCount += 1
-	EnemyDead.emit()
-	print(killCount)
-
 
 
 func _on_gem_gemhit():
 	gem_health -= 10
 	#print(gem_health)
-
-
-#func _on_player_position_changed(position):
-	#var player_new_position = player.position  #finds player pos
 	
 
 
@@ -113,7 +105,7 @@ func build():
 	if Input.is_action_just_released('delete_build') and building_mode == true:
 		prevWall.queue_free()
 		building_mode = false
-	if Input.is_action_just_released("test") and building_mode == true and inGem == false and beforeGame == false and wood > 1:
+	if Input.is_action_just_released("Build") and building_mode == true and inGem == false and beforeGame == false and wood > 1:
 		var wall = wall_scene.instantiate()
 		print(prevWall.position)
 		wall.position = prevWall.position
@@ -124,18 +116,7 @@ func build():
 		add_child(wall)
 		prevWall = preview_wall.instantiate()
 		add_child(prevWall)
-		
-			# YOOO TRYNA ADD A PREVIEW WALL
-			#var wall = wall_scene.instantiate()
-			#wall.modulate = Color(0, 1, 1, 1)
-			#wall.position = mousepos
-			#var wall_rotation = Input.is_action_pressed('wall rotation')
-			#wall.rotation = 1.55
-		#wall.rotation = mousepos.rotation
-		#print(wood)
-			#wood -= 2
-			#wall_built.emit()
-			#add_child(wall)
+
 	
 func _on_gem_mouse_exit():
 	inGem = false
@@ -151,10 +132,21 @@ func _on_hud_start_button():
 	tree_spawn()
 	
 
-	
-
 signal tree_chopped
 func _on_child_exiting_tree(node: Node) -> void:
 	if node.is_in_group('Trees'):
 		tree_chopped.emit()
 		wood += 5
+
+signal EnemyDied(killCount : int)
+signal end_wave
+func _on_exiting_tree(node: Node) -> void:
+	var waveMulti = (wave+2) * (wave+1)
+	if node.is_in_group('mobs'):
+		killCount += 1
+		EnemyDied.emit(killCount)
+
+#	if killCount == waveMulti:
+		
+		
+		

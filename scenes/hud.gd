@@ -4,10 +4,12 @@ signal start_game
 
 @onready var health : int = 100
 @onready var wood : int = 0
+@onready var wave : int = 0
 
 func _process(_delta):
-	EnemyDead()
+	#_on_main_enemy_dead()
 	$CollectionTime.text = 'TIME BEFORE UNDEAD ATTACK: ' + str("%0.1f" % $CollectionTimer.time_left," s")
+	$WaveTimerMsg.text = 'TIME UNTIL NEXT WAVE ' + str("%0.1f" % $WaveTimer.time_left, " s")
 	
 func show_message(text):
 	$Message.text = text
@@ -34,6 +36,7 @@ func _on_start_button_pressed():
 	start_button.emit()
 	health = 100
 	wood = 0
+	wave += 1
 	$Wood.text = 'WOOD: ' + str(wood)
 	Main.killCount = 0
 	$health.text = 'HEALTH: ' + str(health)
@@ -61,17 +64,13 @@ func Onhit():
 	health -= 10
 	$health.text = "HEALTH: " + str(health)
 
-func EnemyDead():
-	var score = Main.killCount
-	$Score.text = 'SCORE: ' + str(score)
+
 
 signal collectionTimer
 func _on_collection_timer_timeout():
 	collectionTimer.emit()
+
 	
-
-
-
 
 func _on_main_tree_chopped() -> void:
 	wood += 5
@@ -82,3 +81,27 @@ func _on_main_tree_chopped() -> void:
 func _on_main_wall_built() -> void:
 	wood -= 2
 	$Wood.text = 'WOOD: ' + str(wood)
+
+
+
+#func _on_main_end_wave():
+	#wave += 1
+	#$WaveMessage.text = 'YOU HAVE NOW COMPLETED WAVE ' + str(wave)
+	#$WaveMessage.show()
+	#$WaveTimer.start()
+	#print('oui')
+	
+
+func _on_main_enemy_dead(killCount: int):
+	$Score.text = 'SCORE: ' + str(killCount)
+	var waveMulti = (wave+2) * (wave+1)
+	if killCount == waveMulti:
+		$WaveMessage.text = 'YOU HAVE NOW COMPLETED WAVE ' + str(wave)
+		$WaveMessage.show()
+		await get_tree().create_timer(4.0).timeout
+		$WaveMessage.hide()
+		$WaveTimer.start()
+
+		$WaveTimerMsg.show()
+		await $WaveTimer.timeout
+		$WaveTimerMsg.hide()

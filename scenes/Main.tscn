@@ -220,7 +220,8 @@ position = Vector2(-527, -311)
 [node name="Gem" parent="." instance=ExtResource("7_buolf")]
 position = Vector2(-6, 1)
 
-[connection signal="EnemyDead" from="." to="HUD" method="_on_main_enemy_dead"]
+[connection signal="EnemyDied" from="." to="HUD" method="_on_main_enemy_dead"]
+[connection signal="child_exiting_tree" from="." to="." method="_on_exiting_tree"]
 [connection signal="child_exiting_tree" from="." to="." method="_on_child_exiting_tree"]
 [connection signal="tree_chopped" from="." to="HUD" method="_on_main_tree_chopped"]
 [connection signal="wall_built" from="." to="HUD" method="_on_main_wall_built"]

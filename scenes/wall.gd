@@ -4,9 +4,9 @@ extends Node2D
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group('mobs'):
-		print(body.name)
+		#print(body.name)
 		wall_health -= 1
-		print(wall_health)
+		#print(wall_health)
 	if wall_health == 0:
 		queue_free()
 		

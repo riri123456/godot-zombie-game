@@ -11,8 +11,10 @@ events = [SubResource("InputEventAction_fll2u")]
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_836p8")
 
+[node name="WaveTimer" type="Timer" parent="."]
+wait_time = 5.0
+
 [node name="CollectionTimer" type="Timer" parent="."]
-wait_time = 2.0
 one_shot = true
 
 [node name="CollectionTime" type="Label" parent="."]
@@ -95,6 +97,37 @@ offset_bottom = 83.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 60
 text = "WOOD: "
+
+[node name="WaveMessage" type="Label" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 50
+text = "YOU HAVE NOW COMPLETED WAVE 1"
+
+[node name="WaveTimerMsg" type="Label" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 50
 
 [connection signal="timeout" from="CollectionTimer" to="." method="_on_collection_timer_timeout"]
 [connection signal="pressed" from="startButton" to="." method="_on_start_button_pressed"]

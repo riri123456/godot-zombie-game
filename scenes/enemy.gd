@@ -5,7 +5,7 @@ func _ready():
 	var mob_types = Array($AnimatedSprite2D.sprite_frames.get_animation_names())
 	$AnimatedSprite2D.animation = mob_types.pick_random()
 	CollisionSetter()
-	
+	#print(is_connected("EnemyDead", $Hud, "EnemyDead"))
 	
 	
 func _on_visible_on_screen_notifier_2d_screen_exited():
@@ -34,4 +34,4 @@ func CollisionSetter():
 func _on_hitbox_enemy_area_entered(area):
 	if area.name == 'Sword':
 		queue_free()
-		get_node("/root/Main").killed()
+		#get_node("/root/Main").killed()
