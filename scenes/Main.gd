@@ -18,9 +18,9 @@ var prevWall: Node2D = null
 @onready var wave : int = 0
 @onready var mob_counter : int
 
-func _process(delta):
+func _process(delta: float) -> void:
 	game_over()
-	build()
+	#build()
 	
 
 func game_over():
@@ -88,34 +88,36 @@ func _on_gem_gemhit():
 	gem_health -= 10
 	#print(gem_health)
 	
+func start_build():
+	building_mode = true
+	prevWall = preview_wall.instantiate()
+	add_child(prevWall)
+	prevWall.global_position = get_global_mouse_position()
+	
+func confirm_build():
+	var wall = wall_scene.instantiate()
+	wall.global_position = prevWall.global_position
+	wall.rotation = prevWall.rotation
+	add_child(wall)
+	wood -= 2
 
 
 
 signal wall_built
-func build():
-	var mousepos = get_global_mouse_position()
-	if Input.is_action_just_released("Build") and inGem == false and beforeGame == false and wood > 1 and building_mode == false:
-		building_mode = true
-		prevWall = preview_wall.instantiate()
-		add_child(prevWall)
-		print('prev')
-	if Input.is_action_just_released("wall rotation") and building_mode == true:
+func _input(event: InputEvent) -> void:
+	if event.is_action_released("Build"):
+		if not building_mode and not inGem and not beforeGame and wood > 1:
+			start_build()
+		elif building_mode and not inGem and not beforeGame and wood > 1:
+			confirm_build()
+			wall_built.emit()
+	elif event.is_action_pressed('wall rotation') and building_mode == true:
 		prevWall.rotation_degrees += 90.0
-		print('rotate')
-	if Input.is_action_just_released('delete_build') and building_mode == true:
+	elif event.is_action_pressed('delete_build') and building_mode == true:
 		prevWall.queue_free()
 		building_mode = false
-	if Input.is_action_just_released("Build") and building_mode == true and inGem == false and beforeGame == false and wood > 1:
-		var wall = wall_scene.instantiate()
-		print(prevWall.position)
-		wall.position = prevWall.position
-		wall.rotation = prevWall.rotation
-		prevWall.queue_free()
-		wood -= 2
-		wall_built.emit()
-		add_child(wall)
-		prevWall = preview_wall.instantiate()
-		add_child(prevWall)
+		
+		
 
 	
 func _on_gem_mouse_exit():
@@ -146,7 +148,7 @@ func _on_exiting_tree(node: Node) -> void:
 		killCount += 1
 		EnemyDied.emit(killCount)
 
-#	if killCount == waveMulti:
-		
-		
-		
+
+
+func _on_hud_next_wave() -> void:
+	wave += 1

@@ -91,7 +91,7 @@ func _on_main_wall_built() -> void:
 	#$WaveTimer.start()
 	#print('oui')
 	
-
+signal next_wave
 func _on_main_enemy_dead(killCount: int):
 	$Score.text = 'SCORE: ' + str(killCount)
 	var waveMulti = (wave+2) * (wave+1)
@@ -105,3 +105,4 @@ func _on_main_enemy_dead(killCount: int):
 		$WaveTimerMsg.show()
 		await $WaveTimer.timeout
 		$WaveTimerMsg.hide()
+		next_wave.emit()
