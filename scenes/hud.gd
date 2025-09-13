@@ -5,6 +5,7 @@ signal start_game
 @onready var health : int = 100
 @onready var wood : int = 0
 @onready var wave : int = 0
+@onready var waveMulti : int = 5
 
 func _process(_delta):
 	#_on_main_enemy_dead()
@@ -94,8 +95,10 @@ func _on_main_wall_built() -> void:
 signal next_wave
 func _on_main_enemy_dead(killCount: int):
 	$Score.text = 'SCORE: ' + str(killCount)
-	var waveMulti = (wave+2) * (wave+1)
-	if killCount == waveMulti:
+	waveMulti = int(5 * pow(2, wave - 1))
+	print(waveMulti)
+	var enemykilled = killCount
+	if enemykilled == waveMulti:
 		$WaveMessage.text = 'YOU HAVE NOW COMPLETED WAVE ' + str(wave)
 		$WaveMessage.show()
 		await get_tree().create_timer(4.0).timeout
@@ -106,3 +109,5 @@ func _on_main_enemy_dead(killCount: int):
 		await $WaveTimer.timeout
 		$WaveTimerMsg.hide()
 		next_wave.emit()
+		wave += 1
+		enemykilled = 0

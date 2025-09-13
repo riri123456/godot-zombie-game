@@ -17,10 +17,10 @@ extends Node2D
 var prevWall: Node2D = null
 @onready var wave : int = 0
 @onready var mob_counter : int
+@onready var waveMulti : int = 5
 
 func _process(delta: float) -> void:
 	game_over()
-	#build()
 	
 
 func game_over():
@@ -40,8 +40,6 @@ func game_over():
 		get_tree().call_group(&"Trees", &"queue_free")
 		
 		
-	
-	
 func new_game():  
 	wave += 1
 	print('new game wave is ' + str(wave))
@@ -50,7 +48,7 @@ func new_game():
 	$MobTimer.start()
 	$HUD.show_message("Get Ready")
 	$Player.show()
-	gem_health = 100
+	#gem_health = 100
 
 	
 func tree_spawn():
@@ -70,19 +68,16 @@ func _on_mob_timer_timeout():
 	mob_spawn_location.progress_ratio = randf()
 	mob.position = mob_spawn_location.position
 	add_child(mob)
-	var waveMulti = (wave+2) * (wave+1)
+	waveMulti = int(5 * pow(2, wave - 1))
 	#print('onmob wave multi is ' + str(waveMulti))
 	#print('onmob wave is ' + str(wave))
 	if mob_counter == waveMulti:
 		$MobTimer.stop()
-
-	
-	
+		
+		
 func _on_player_hit():
 	health -= 10
 	#print(health)
-
-
 
 func _on_gem_gemhit():
 	gem_health -= 10
@@ -101,8 +96,6 @@ func confirm_build():
 	add_child(wall)
 	wood -= 2
 
-
-
 signal wall_built
 func _input(event: InputEvent) -> void:
 	if event.is_action_released("Build"):
@@ -118,8 +111,7 @@ func _input(event: InputEvent) -> void:
 		building_mode = false
 		
 		
-
-	
+		
 func _on_gem_mouse_exit():
 	inGem = false
 
@@ -143,7 +135,7 @@ func _on_child_exiting_tree(node: Node) -> void:
 signal EnemyDied(killCount : int)
 signal end_wave
 func _on_exiting_tree(node: Node) -> void:
-	var waveMulti = (wave+2) * (wave+1)
+	waveMulti = int(5 * pow(2, wave - 1))
 	if node.is_in_group('mobs'):
 		killCount += 1
 		EnemyDied.emit(killCount)
@@ -151,4 +143,5 @@ func _on_exiting_tree(node: Node) -> void:
 
 
 func _on_hud_next_wave() -> void:
-	wave += 1
+	new_game()
+	
