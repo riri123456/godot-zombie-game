@@ -179,7 +179,7 @@ position = Vector2(34, -7)
 rotation = -0.000396606
 tile_set = SubResource("TileSet_mffp3")
 format = 2
-layer_0/tile_data = PackedInt32Array(-32, 720896, 3, 131076, 458752, 0, 196613, 458752, 0, -1114101, 1, 0, -1114100, 1, 0, -1179636, 1, 0, -1179634, 1, 0, -1179633, 1, 0)
+layer_0/tile_data = PackedInt32Array(-32, 720896, 3, 131076, 458752, 0, 196613, 458752, 0, -1114101, 1, 0, -1114100, 1, 0, -1179636, 1, 0, -1179634, 1, 0, -1179633, 1, 0, 1245176, 65537, 0)
 
 [node name="ground" type="TileMapLayer" parent="TileMap"]
 use_parent_material = true
@@ -230,10 +230,14 @@ position = Vector2(-6, 1)
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
 [connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
 [connection signal="collectionTimer" from="HUD" to="." method="_on_collection_timer"]
-[connection signal="next_wave" from="HUD" to="." method="_on_hud_next_wave"]
+[connection signal="next_wave" from="HUD" to="." method="next_wave"]
+[connection signal="next_wave" from="HUD" to="Gem" method="_on_hud_next_wave"]
 [connection signal="start_button" from="HUD" to="." method="_on_hud_start_button"]
 [connection signal="start_game" from="HUD" to="." method="new_game"]
 [connection signal="start_game" from="HUD" to="Gem" method="_on_hud_start_game"]
 [connection signal="Gemhit" from="Gem" to="." method="_on_gem_gemhit"]
+[connection signal="gemProgIncr" from="Gem" to="." method="_on_gem_gem_prog_incr"]
 [connection signal="mouseEnter" from="Gem" to="." method="_on_gem_mouse_enter"]
 [connection signal="mouseExit" from="Gem" to="." method="_on_gem_mouse_exit"]
+[connection signal="wave_done" from="Gem" to="." method="wave_done"]
+[connection signal="wave_done" from="Gem" to="HUD" method="_on_gem_wave_done"]

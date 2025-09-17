@@ -19,6 +19,7 @@ var prevWall: Node2D = null
 @onready var mob_counter : int
 @onready var waveMulti : int = 5
 
+
 func _process(delta: float) -> void:
 	game_over()
 	
@@ -50,9 +51,21 @@ func new_game():
 	$Player.show()
 	#gem_health = 100
 
+func wave_done():
+	wave += 1
+	get_tree().call_group(&"mobs", &"queue_free")
+	$MobTimer.stop()
+	
+func next_wave():
+	if $MobTimer.wait_time >= 0.5:
+		$MobTimer.wait_time -= 0.2
+	$MobTimer.start()
+
+
 	
 func tree_spawn():
-	for i in range(0, 50):
+	var higher = randi_range(5, 10)
+	for i in range(0, higher):
 		var tre = tree_scene.instantiate()
 		var tree_location_x = randf_range(-505, 760)
 		var tree_location_y = randf_range(-295, 330)
@@ -71,8 +84,6 @@ func _on_mob_timer_timeout():
 	waveMulti = int(5 * pow(2, wave - 1))
 	#print('onmob wave multi is ' + str(waveMulti))
 	#print('onmob wave is ' + str(wave))
-	if mob_counter == waveMulti:
-		$MobTimer.stop()
 		
 		
 func _on_player_hit():
@@ -139,9 +150,3 @@ func _on_exiting_tree(node: Node) -> void:
 	if node.is_in_group('mobs'):
 		killCount += 1
 		EnemyDied.emit(killCount)
-
-
-
-func _on_hud_next_wave() -> void:
-	new_game()
-	

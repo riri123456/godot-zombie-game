@@ -83,6 +83,11 @@ text = "GEM HEALTH: "
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_o8oug")
 
+[node name="progressIncrease" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="wave_done" from="." to="." method="_on_wave_done"]
 [connection signal="body_entered" from="Gemhit" to="." method="_on_area_2d_body_entered"]
 [connection signal="mouse_entered" from="Gemmouse" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Gemmouse" to="." method="_on_area_2d_mouse_exited"]
+[connection signal="timeout" from="progressIncrease" to="." method="_on_progress_increase_timeout"]

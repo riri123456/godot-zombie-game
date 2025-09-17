@@ -1,27 +1,45 @@
 extends Node2D
 class_name Gem
 
-var gemHealth = 100
+var gemProgress : float = 0.0
+var progressMulti : float = 50.0
 @onready var inGem : bool
+var enemyDamage : float = 5.0
 	
 signal Gemhit
-
 func _on_area_2d_body_entered(body):
 	var mousepos = get_global_mouse_position()
 	if body is RigidBody2D:
 		Gemhit.emit()
-		gemHealth -= 10
-
-
+		gemProgress -= enemyDamage
 
 
 func _process(delta):
-	$GemHealth.text = 'GEM HEALTH: ' + str(gemHealth)
+	$GemHealth.text = 'GEM HEALTH: ' + str(gemProgress)
+	wave_finished()
 
+
+
+func _on_wave_done() -> void:
+	gemProgress = 0.0
+	
+func _on_hud_next_wave() -> void:
+	$progressIncrease.start()
+
+
+signal wave_done
+func wave_finished():
+	if gemProgress >= 100.0:
+		$progressIncrease.stop()
+		#await get_tree().create_timer(0.5).timeout
+		wave_done.emit()
+		
 
 
 func _on_hud_start_game():
-	gemHealth = 100
+	gemProgress = 0
+	$progressIncrease.start()
+	
 	
 signal mouseEnter
 func _on_area_2d_mouse_entered():
@@ -33,3 +51,10 @@ signal mouseExit
 func _on_area_2d_mouse_exited():
 	inGem = false
 	mouseExit.emit()
+
+
+signal gemProgIncr
+func _on_progress_increase_timeout() -> void:
+	gemProgress += progressMulti
+	print('the gemhealthy ' + str(gemProgress))
+	gemProgIncr.emit()

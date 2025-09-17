@@ -92,22 +92,36 @@ func _on_main_wall_built() -> void:
 	#$WaveTimer.start()
 	#print('oui')
 	
-signal next_wave
+#signal next_wave
 func _on_main_enemy_dead(killCount: int):
 	$Score.text = 'SCORE: ' + str(killCount)
-	waveMulti = int(5 * pow(2, wave - 1))
-	print(waveMulti)
-	var enemykilled = killCount
-	if enemykilled == waveMulti:
-		$WaveMessage.text = 'YOU HAVE NOW COMPLETED WAVE ' + str(wave)
-		$WaveMessage.show()
-		await get_tree().create_timer(4.0).timeout
-		$WaveMessage.hide()
-		$WaveTimer.start()
+	#waveMulti = int(5 * pow(2, wave - 1))
+	#print(waveMulti)
+	#var enemykilled = killCount
+	#if enemykilled == waveMulti:
+		#$WaveMessage.text = 'YOU HAVE NOW COMPLETED WAVE ' + str(wave)
+		#$WaveMessage.show()
+		#await get_tree().create_timer(4.0).timeout
+		#$WaveMessage.hide()
+		#$WaveTimer.start()
+#
+		#$WaveTimerMsg.show()
+		#await $WaveTimer.timeout
+		#$WaveTimerMsg.hide()
+		#next_wave.emit()
+		#wave += 1
+		#enemykilled = 0
 
-		$WaveTimerMsg.show()
-		await $WaveTimer.timeout
-		$WaveTimerMsg.hide()
-		next_wave.emit()
-		wave += 1
-		enemykilled = 0
+signal next_wave
+func _on_gem_wave_done() -> void:
+	$WaveMessage.text = 'YOU HAVE NOW COMPLETED WAVE ' + str(wave)
+	$WaveMessage.show()
+	await get_tree().create_timer(4.0).timeout
+	$WaveMessage.hide()
+	$WaveTimer.start()
+	$WaveTimerMsg.show()
+	await $WaveTimer.timeout
+	$WaveTimerMsg.hide()
+	next_wave.emit()
+	wave += 1
+# BUG TOO MANY WAVES FOR SOME REASON
