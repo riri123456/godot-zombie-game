@@ -22,6 +22,7 @@ var prevWall: Node2D = null
 
 func _process(delta: float) -> void:
 	game_over()
+
 	
 
 func game_over():
@@ -55,23 +56,27 @@ func wave_done():
 	wave += 1
 	get_tree().call_group(&"mobs", &"queue_free")
 	$MobTimer.stop()
+	tree_spawn()
 	
 func next_wave():
 	if $MobTimer.wait_time >= 0.5:
 		$MobTimer.wait_time -= 0.2
 	$MobTimer.start()
+	
 
-
+var tree_count : int
 	
 func tree_spawn():
-	var higher = randi_range(5, 10)
-	for i in range(0, higher):
-		var tre = tree_scene.instantiate()
-		var tree_location_x = randf_range(-505, 760)
-		var tree_location_y = randf_range(-295, 330)
-		tre.position = Vector2i(tree_location_x, tree_location_y)
-		tre.name = 'Trees'
-		add_child(tre)
+	var higher = randi_range(4, 14)
+	if tree_count <= 35:
+		for i in range(0, higher):
+			tree_count += 1
+			var tre = tree_scene.instantiate()
+			var tree_location_x = randf_range(-505, 760)
+			var tree_location_y = randf_range(-295, 330)
+			tre.position = Vector2i(tree_location_x, tree_location_y)
+			tre.name = 'Trees'
+			add_child(tre)
 
 
 func _on_mob_timer_timeout():
@@ -141,6 +146,7 @@ signal tree_chopped
 func _on_child_exiting_tree(node: Node) -> void:
 	if node.is_in_group('Trees'):
 		tree_chopped.emit()
+		tree_count -= 1
 		wood += 5
 
 signal EnemyDied(killCount : int)

@@ -2,7 +2,7 @@ extends Node2D
 class_name Gem
 
 var gemProgress : float = 0.0
-var progressMulti : float = 50.0
+var progressMulti : float = 40
 @onready var inGem : bool
 var enemyDamage : float = 5.0
 	
@@ -24,6 +24,7 @@ func _on_wave_done() -> void:
 	gemProgress = 0.0
 	
 func _on_hud_next_wave() -> void:
+	$progressIncrease.wait_time += 1
 	$progressIncrease.start()
 
 
