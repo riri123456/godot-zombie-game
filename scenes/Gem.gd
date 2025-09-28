@@ -2,7 +2,7 @@ extends Node2D
 class_name Gem
 
 var gemProgress : float = 0.0
-var progressMulti : float = 40
+var progressMulti : float = 10
 @onready var inGem : bool
 var enemyDamage : float = 5.0
 	
@@ -15,8 +15,11 @@ func _on_area_2d_body_entered(body):
 
 
 func _process(delta):
+	if gemProgress <= 0:
+		gemProgress = 0
 	$GemHealth.text = 'GEM HEALTH: ' + str(gemProgress)
 	wave_finished()
+	
 
 
 
@@ -57,5 +60,5 @@ func _on_area_2d_mouse_exited():
 signal gemProgIncr
 func _on_progress_increase_timeout() -> void:
 	gemProgress += progressMulti
-	print('the gemhealthy ' + str(gemProgress))
+	#print('the gemhealthy ' + str(gemProgress))
 	gemProgIncr.emit()

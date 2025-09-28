@@ -6,7 +6,6 @@ extends Node2D
 @onready var health : int = 100
 @onready var killCount : int = 0
 @onready var gem_health : int = 100
-#@onready var player : CharacterBody2D = $Player
 @onready var inGem : bool = false
 @onready var gameStart : bool = false
 @onready var beforeGame : bool = true
@@ -26,7 +25,7 @@ func _process(delta: float) -> void:
 	
 
 func game_over():
-	if health == 0 or health < 0 or gem_health <= 0:
+	if health == 0 or health < 0:
 		gameStart = false
 		$MobTimer.stop()
 		$HUD.show_game_over()
@@ -44,13 +43,11 @@ func game_over():
 		
 func new_game():  
 	wave += 1
-	print('new game wave is ' + str(wave))
+	#print('new game wave is ' + str(wave))
 	gameStart = true
-	#$StartTimer.start()
 	$MobTimer.start()
 	$HUD.show_message("Get Ready")
 	$Player.show()
-	#gem_health = 100
 
 func wave_done():
 	wave += 1
@@ -62,21 +59,21 @@ func next_wave():
 	if $MobTimer.wait_time >= 0.5:
 		$MobTimer.wait_time -= 0.2
 	$MobTimer.start()
+
 	
 
 var tree_count : int
-	
 func tree_spawn():
 	var higher = randi_range(4, 14)
 	if tree_count <= 35:
 		for i in range(0, higher):
 			tree_count += 1
-			var tre = tree_scene.instantiate()
+			var tree = tree_scene.instantiate()
 			var tree_location_x = randf_range(-505, 760)
 			var tree_location_y = randf_range(-295, 330)
-			tre.position = Vector2i(tree_location_x, tree_location_y)
-			tre.name = 'Trees'
-			add_child(tre)
+			tree.position = Vector2i(tree_location_x, tree_location_y)
+			tree.name = 'Trees'
+			add_child(tree)
 
 
 func _on_mob_timer_timeout():
@@ -85,19 +82,17 @@ func _on_mob_timer_timeout():
 	var mob_spawn_location = $MobPath/MobSpawnLocation
 	mob_spawn_location.progress_ratio = randf()
 	mob.position = mob_spawn_location.position
+	mob.speed += wave*2 + 4
+	#print(mob.speed)
 	add_child(mob)
 	waveMulti = int(5 * pow(2, wave - 1))
-	#print('onmob wave multi is ' + str(waveMulti))
-	#print('onmob wave is ' + str(wave))
 		
 		
 func _on_player_hit():
 	health -= 10
-	#print(health)
 
 func _on_gem_gemhit():
-	gem_health -= 10
-	#print(gem_health)
+	gem_health -= 5
 	
 func start_build():
 	building_mode = true
@@ -156,3 +151,5 @@ func _on_exiting_tree(node: Node) -> void:
 	if node.is_in_group('mobs'):
 		killCount += 1
 		EnemyDied.emit(killCount)
+
+		
