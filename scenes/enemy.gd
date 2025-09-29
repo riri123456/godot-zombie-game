@@ -1,32 +1,21 @@
 extends RigidBody2D
+class_name Enemy
 
 @onready var destination = Vector2(0, 0)
 @export var speed = 80
-@onready var knockbackSpeed = 5
-@onready var knockedback : bool = false
+@export var knockback_strength: float = 300.0
+@export var velocity_threshold: float = 10.0
 
 func _ready():
 	var mob_types = Array($AnimatedSprite2D.sprite_frames.get_animation_names())
 	$AnimatedSprite2D.animation = mob_types.pick_random()
 	CollisionSetter()
+	linear_damp = 5.0
 	#print(is_connected("EnemyDead", $Hud, "EnemyDead"))
 	
 	
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	queue_free()
-	
-func _physics_process(delta):
-	position_update(delta)
-	print(knockedback)
-	
-
-
-func position_update(delta):
-	if knockedback == false:
-		position += position.direction_to(destination) * speed * delta
-	elif knockedback == true:
-		await get_tree().create_timer(2).timeout
-		knockedback = false
 	
 
 func CollisionSetter():
@@ -39,22 +28,22 @@ func CollisionSetter():
 	else:
 		$collisionCrawlers.disabled = false
 		$hitboxEnemy/hitboxCrawler.disabled = false
-		
-
-func apply_knockback():
-		knockedback = true
-		var strength : float = 20.0
-		var dir = (global_position - destination).normalized()
-		linear_velocity = dir * strength
-		print('hello')
-
-		
+	
 		
 #Killing enemy
 func _on_hitbox_enemy_area_entered(area):
 	if area.name == 'Sword':
 		queue_free()
-		#get_node("/root/Main").killed()
-	#position -= position.direction_to(destination) * 5
 	if area.name != 'Gemmouse':
-		apply_knockback()
+		apply_knockback(area.global_position)
+		
+
+func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
+		if state.linear_velocity.length() > velocity_threshold:
+			return
+		
+		position += position.direction_to(destination) * speed * state.step
+		
+func apply_knockback(from_pos: Vector2) -> void:
+	var dir = (global_position - from_pos).normalized()
+	apply_central_impulse(dir * knockback_strength)

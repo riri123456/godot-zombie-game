@@ -154,7 +154,7 @@ disabled = true
 shape = SubResource("RectangleShape2D_cptjw")
 disabled = true
 
-[node name="hitboxEnemy" type="Area2D" parent="."]
+[node name="hitboxEnemy" type="Area2D" parent="." groups=["mobs"]]
 
 [node name="hitboxCrawler" type="CollisionShape2D" parent="hitboxEnemy"]
 position = Vector2(0, 4)
@@ -171,3 +171,4 @@ shape = SubResource("RectangleShape2D_pvk18")
 disabled = true
 
 [connection signal="area_entered" from="hitboxEnemy" to="." method="_on_hitbox_enemy_area_entered"]
+[connection signal="area_exited" from="hitboxEnemy" to="." method="_on_hitbox_enemy_area_exited"]
