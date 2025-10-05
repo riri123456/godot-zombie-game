@@ -2,7 +2,7 @@ extends Node2D
 class_name Gem
 
 var gemProgress : float = 0.0
-var progressMulti : float = 20
+var progressMulti : float = 10
 @onready var inGem : bool
 var enemyDamage : float = 5.0
 @onready var enemy_gem : bool = false
@@ -20,12 +20,16 @@ func _on_gemhit_body_exited(body: Node2D) -> void:
 	if body is RigidBody2D:
 		enemy_gem = false
 
+func set_progress_bar() -> void:
+	$GemProgress.value = gemProgress
+
 
 
 func _process(delta):
 	if gemProgress <= 0:
 		gemProgress = 0
 	$GemHealth.text = 'GEM HEALTH: ' + str(gemProgress)
+	set_progress_bar()
 	wave_finished()
 	cunt()
 
@@ -33,6 +37,7 @@ func _process(delta):
 
 func _on_wave_done() -> void:
 	gemProgress = 0.0
+	set_progress_bar()
 
 	
 func _on_hud_next_wave() -> void:
@@ -54,6 +59,7 @@ func wave_finished():
 func _on_hud_start_game():
 	gemProgress = 0
 	$progressIncrease.start()
+	set_progress_bar()
 	
 	
 signal mouseEnter
@@ -94,6 +100,7 @@ func _on_gem_store_mouse_exited() -> void:
 signal gemProgIncr
 func _on_progress_increase_timeout() -> void:
 	gemProgress += progressMulti
+	set_progress_bar()
 	#print('the gemhealthy ' + str(gemProgress))
 	gemProgIncr.emit()
 

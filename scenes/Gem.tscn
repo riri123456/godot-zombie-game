@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cwxspd8lu6ifb"]
+[gd_scene load_steps=14 format=3 uid="uid://cwxspd8lu6ifb"]
 
 [ext_resource type="Script" uid="uid://c2i4vaaf07jk" path="res://scenes/Gem.gd" id="1_st00i"]
 [ext_resource type="Texture2D" uid="uid://8fpqr18au1ip" path="res://assets/mystic_woods_free_2.2/sprites/objects/chest_01.png" id="1_x3db6"]
@@ -51,6 +51,10 @@ size = Vector2(25, 25)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o8oug"]
 size = Vector2(48, 43)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o8oug"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tx2gm"]
+
 [node name="Gem" type="Node2D"]
 script = ExtResource("1_st00i")
 
@@ -85,6 +89,7 @@ position = Vector2(-0.5, -0.5)
 shape = SubResource("RectangleShape2D_8ykj7")
 
 [node name="GemHealth" type="Label" parent="."]
+visible = false
 offset_left = -21.0
 offset_top = -22.0
 offset_right = 89.0
@@ -102,6 +107,16 @@ shape = SubResource("RectangleShape2D_o8oug")
 
 [node name="progressIncrease" type="Timer" parent="."]
 wait_time = 2.0
+
+[node name="GemProgress" type="ProgressBar" parent="."]
+offset_left = -38.0
+offset_top = -22.0
+offset_right = 36.0
+offset_bottom = -14.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_o8oug")
+theme_override_styles/fill = SubResource("StyleBoxTexture_tx2gm")
+step = 5.0
+show_percentage = false
 
 [connection signal="wave_done" from="." to="." method="_on_wave_done"]
 [connection signal="mouse_entered" from="GemStore" to="." method="_on_gem_store_mouse_entered"]
