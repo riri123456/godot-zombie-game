@@ -152,4 +152,8 @@ func _on_exiting_tree(node: Node) -> void:
 		killCount += 1
 		EnemyDied.emit(killCount)
 
-		
+
+func _on_gem_health_buy() -> void:
+	if health <= 100 and wood >= 5:
+		health += 5
+		wood -= 5

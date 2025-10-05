@@ -237,6 +237,8 @@ position = Vector2(-6, 1)
 [connection signal="start_game" from="HUD" to="Gem" method="_on_hud_start_game"]
 [connection signal="Gemhit" from="Gem" to="." method="_on_gem_gemhit"]
 [connection signal="gemProgIncr" from="Gem" to="." method="_on_gem_gem_prog_incr"]
+[connection signal="health_buy" from="Gem" to="." method="_on_gem_health_buy"]
+[connection signal="health_buy" from="Gem" to="HUD" method="_on_gem_health_buy"]
 [connection signal="mouseEnter" from="Gem" to="." method="_on_gem_mouse_enter"]
 [connection signal="mouseExit" from="Gem" to="." method="_on_gem_mouse_exit"]
 [connection signal="wave_done" from="Gem" to="." method="wave_done"]
