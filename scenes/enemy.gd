@@ -35,7 +35,7 @@ func _on_hitbox_enemy_area_entered(area):
 	if area.name == 'Sword':
 		queue_free()
 	if area.name != 'Gemmouse' and area.name != 'hitboxEnemy' and area.name != 'wallColl':
-		print(area.name)
+		#print(area.name)
 		apply_knockback(area.global_position)
 		
 

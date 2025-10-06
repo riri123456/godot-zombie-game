@@ -2,12 +2,12 @@ extends CharacterBody2D
 
 @onready var animations = $AnimationPlayer
 @onready var animated_sprite = $AnimatedSprite2D
-@export var SPEED = 100
+@export var SPEED = 300
 @onready var previousDirection = 'Down'
 @onready var Playerpost : float
 @onready var weapon = $Weapon
 @onready var weaponcoll = $Weapon/Sword/CollisionShape2D
-var nonEnemies : Array = ['GemColl', 'Player', 'WallColl', 'StaticBody2D']
+var nonEnemies : Array = ['GemColl', 'Player', 'WallColl', 'StaticBody2D', 'Worldborder']
 var attack: bool = false
 var screenSize
 
@@ -67,15 +67,3 @@ func _on_hurtbox_body_entered(body):
 	#print(body.name)
 	if body.name not in nonEnemies:
 		hit.emit()
-
-
-
-
-#signal position_changed(position)
-
-#func _process(delta):
-#	emit_signal("position_changed", self.global_position) finds player position and sends signal
-		
-
-		
-		

@@ -9,7 +9,6 @@ signal start_game
 
 
 func _process(_delta):
-	#_on_main_enemy_dead()
 	$CollectionTime.text = 'TIME BEFORE UNDEAD ATTACK: ' + str("%0.1f" % $CollectionTimer.time_left," s")
 	$WaveTimerMsg.text = 'TIME UNTIL NEXT WAVE ' + str("%0.1f" % $WaveTimer.time_left, " s")
 	
@@ -101,7 +100,7 @@ func _on_gem_wave_done() -> void:
 	$WaveTimerMsg.hide()
 	next_wave.emit()
 	wave += 1
-# BUG TOO MANY WAVES FOR SOME REASON
+
 
 
 func _on_gem_health_buy() -> void:

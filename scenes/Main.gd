@@ -22,13 +22,12 @@ var prevWall: Node2D = null
 func _process(delta: float) -> void:
 	game_over()
 
-	
-
 func game_over():
 	if health == 0 or health < 0:
 		gameStart = false
 		$MobTimer.stop()
 		$HUD.show_game_over()
+		$Gem.hide()
 		$Player.hide()
 		health = 100
 		killCount = 0
@@ -48,6 +47,7 @@ func new_game():
 	$MobTimer.start()
 	$HUD.show_message("Get Ready")
 	$Player.show()
+	$Gem.show()
 
 func wave_done():
 	wave += 1

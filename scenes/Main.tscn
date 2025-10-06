@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://btwygw8uf2qjj"]
+[gd_scene load_steps=16 format=4 uid="uid://btwygw8uf2qjj"]
 
 [ext_resource type="Script" uid="uid://pbvt3psojm5g" path="res://scenes/Main.gd" id="1_842s1"]
 [ext_resource type="Texture2D" uid="uid://ynqubvv88yan" path="res://assets/Pixel Lands Forest Demo/forest_demo_objects.png" id="1_nf3p7"]
@@ -168,6 +168,12 @@ _data = {
 }
 point_count = 5
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q8u5g"]
+size = Vector2(168.343, 4.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lhr70"]
+size = Vector2(658, 12.5)
+
 [node name="Main" type="Node2D"]
 script = ExtResource("1_842s1")
 enemy_scene = ExtResource("2_i1iq7")
@@ -194,10 +200,14 @@ tile_map_data = PackedByteArray("AAANAP//AAALAAMAAAAGAO3/AAAFAAEAAAAEAO3/AAAPAAI
 tile_set = SubResource("TileSet_mffp3")
 
 [node name="Player" parent="." instance=ExtResource("3_1amtg")]
-position = Vector2(34, 1)
+position = Vector2(34, 5)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(4, 4)
+limit_left = -525
+limit_top = -312
+limit_right = 785
+limit_bottom = 345
 
 [node name="StartTimer" type="Timer" parent="."]
 wait_time = 2.0
@@ -219,6 +229,30 @@ position = Vector2(-527, -311)
 
 [node name="Gem" parent="." instance=ExtResource("7_buolf")]
 position = Vector2(-6, 1)
+
+[node name="Worldborder" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Worldborder"]
+position = Vector2(128.461, -312)
+rotation = 3.14159
+scale = Vector2(7.8, -1)
+shape = SubResource("RectangleShape2D_q8u5g")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Worldborder"]
+position = Vector2(128.922, 345)
+rotation = 3.14159
+scale = Vector2(7.8, -1)
+shape = SubResource("RectangleShape2D_q8u5g")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Worldborder"]
+position = Vector2(789.75, 16)
+rotation = 1.57079
+shape = SubResource("RectangleShape2D_lhr70")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Worldborder"]
+position = Vector2(-531, 17)
+rotation = 1.57079
+shape = SubResource("RectangleShape2D_lhr70")
 
 [connection signal="EnemyDied" from="." to="HUD" method="_on_main_enemy_dead"]
 [connection signal="child_exiting_tree" from="." to="." method="_on_child_exiting_tree"]

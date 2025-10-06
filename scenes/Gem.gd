@@ -24,7 +24,6 @@ func set_progress_bar() -> void:
 	$GemProgress.value = gemProgress
 
 
-
 func _process(delta):
 	if gemProgress <= 0:
 		gemProgress = 0
