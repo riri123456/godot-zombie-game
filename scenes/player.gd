@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 @onready var animations = $AnimationPlayer
 @onready var animated_sprite = $AnimatedSprite2D
-@export var SPEED = 300
+@export var SPEED = 100
 @onready var previousDirection = 'Down'
 @onready var Playerpost : float
 @onready var weapon = $Weapon
@@ -11,12 +11,18 @@ var nonEnemies : Array = ['GemColl', 'Player', 'WallColl', 'StaticBody2D', 'Worl
 var attack: bool = false
 var screenSize
 
+		
+
+
 func get_input():
 	var input_direction = Input.get_vector("Left", "Right", "Forward", "Down")
 	velocity = input_direction * SPEED
+
 	
 	if Input.is_action_pressed("Attack"):
 		animations.play('attack' + previousDirection)
+		if !$attack.playing:
+			$attack.play()
 		attack = true
 		weapon.show()
 		$Weapon/Sword/CollisionShape2D.disabled = false
@@ -48,6 +54,9 @@ func update_animation():
 		elif velocity.y > 0: previousDirection = 'Down'
 		elif velocity.y < 0: previousDirection = 'Up'
 		animated_sprite.play('Walk' + previousDirection)
+		if !$walking.playing:
+			$walking.play()
+		
 
 
 func start(pos):

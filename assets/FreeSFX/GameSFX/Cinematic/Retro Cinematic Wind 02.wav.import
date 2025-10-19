@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://brag7s5r7ei2w"
+path="res://.godot/imported/Retro Cinematic Wind 02.wav-5e0709274fdd090c24016018bb621a6e.sample"
+
+[deps]
+
+source_file="res://assets/FreeSFX/GameSFX/Cinematic/Retro Cinematic Wind 02.wav"
+dest_files=["res://.godot/imported/Retro Cinematic Wind 02.wav-5e0709274fdd090c24016018bb621a6e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

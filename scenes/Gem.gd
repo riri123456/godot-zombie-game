@@ -30,7 +30,7 @@ func _process(delta):
 	$GemHealth.text = 'GEM HEALTH: ' + str(gemProgress)
 	set_progress_bar()
 	wave_finished()
-	cunt()
+	gemstorehub()
 
 	
 
@@ -48,6 +48,8 @@ func _on_hud_next_wave() -> void:
 signal wave_done
 func wave_finished():
 	if gemProgress >= 100.0:
+		if !$Gemfinish.playing:
+			$Gemfinish.play()
 		$progressIncrease.stop()
 		midWave = true
 		#await get_tree().create_timer(0.5).timeout
@@ -69,7 +71,7 @@ func _on_area_2d_mouse_entered():
 		#$GemStore.show()
 	mouseEnter.emit()
 
-func cunt():
+func gemstorehub():
 	if inButton == true and inGem == true and midWave == true:
 		$GemStore.show()
 	elif inButton == false and inGem == true and midWave == true:
@@ -106,4 +108,6 @@ func _on_progress_increase_timeout() -> void:
 signal health_buy
 func _on_gem_store_pressed() -> void:
 	health_buy.emit()
+
+	
 	

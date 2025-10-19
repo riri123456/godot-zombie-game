@@ -1,9 +1,11 @@
-[gd_scene load_steps=67 format=3 uid="uid://cyj3apdujpl7w"]
+[gd_scene load_steps=69 format=3 uid="uid://cyj3apdujpl7w"]
 
 [ext_resource type="Texture2D" uid="uid://copakpslto5o5" path="res://assets/mystic_woods_free_2.2/sprites/characters/player.png" id="1_1763l"]
 [ext_resource type="Script" uid="uid://buad4poi615ih" path="res://scenes/player.gd" id="1_w5yq2"]
 [ext_resource type="Texture2D" uid="uid://c1h0uo43ctagj" path="res://assets/mystic_woods_free_2.2/sprites/characters/player copy.png" id="2_1ipsq"]
 [ext_resource type="PackedScene" uid="uid://b117ixvsko5o6" path="res://scenes/sword.tscn" id="4_n7t3l"]
+[ext_resource type="AudioStream" uid="uid://c1xgiwu0jlvet" path="res://assets/RPG_Essentials_Free/12_Player_Movement_SFX/new_grassstep.wav" id="5_qlg0r"]
+[ext_resource type="AudioStream" uid="uid://xg0sxfds0e34" path="res://assets/RPG_Essentials_Free/12_Player_Movement_SFX/56_Attack_03.wav" id="5_tuyoq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4mskk"]
 atlas = ExtResource("1_1763l")
@@ -673,6 +675,14 @@ rotation = 4.18879
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2(0.5, -12)
 shape = SubResource("RectangleShape2D_7p301")
+
+[node name="attack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_tuyoq")
+volume_db = -4.0
+
+[node name="walking" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_qlg0r")
+volume_db = -8.559
 
 [connection signal="body_entered" from="Weapon/Sword" to="." method="_on_sword_body_entered"]
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]

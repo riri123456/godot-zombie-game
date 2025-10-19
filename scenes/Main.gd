@@ -21,6 +21,17 @@ var prevWall: Node2D = null
 
 func _process(delta: float) -> void:
 	game_over()
+	pause_game()
+	
+signal game_paused
+func pause_game():
+	if gameStart == true and Input.is_action_pressed('ui_cancel'):
+		get_tree().paused = true
+		modulate.a = 0.2
+		game_paused.emit()
+		
+
+		
 
 func game_over():
 	if health == 0 or health < 0:
@@ -44,6 +55,7 @@ func new_game():
 	wave += 1
 	#print('new game wave is ' + str(wave))
 	gameStart = true
+	$Premusic.stop()
 	$MobTimer.start()
 	$HUD.show_message("Get Ready")
 	$Player.show()
@@ -154,6 +166,15 @@ func _on_exiting_tree(node: Node) -> void:
 
 
 func _on_gem_health_buy() -> void:
-	if health <= 100 and wood >= 5:
+	if health < 99 and wood >= 5:
 		health += 5
 		wood -= 5
+		$GemBuy.play()
+
+
+func _on_hud_quit_game() -> void:
+	get_tree().quit()
+
+
+func _on_hud_volume_changed(value: float) -> void:
+	$GemBuy.volume_db == value

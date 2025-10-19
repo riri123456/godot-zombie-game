@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dkuux6x0684ui"
+path="res://.godot/imported/Retro Weapon Plasma Type B 03.wav-f612d89acea7556733d2c7015c1b9233.sample"
+
+[deps]
+
+source_file="res://assets/FreeSFX/GameSFX/Weapon/various/Retro Weapon Plasma Type B 03.wav"
+dest_files=["res://.godot/imported/Retro Weapon Plasma Type B 03.wav-f612d89acea7556733d2c7015c1b9233.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

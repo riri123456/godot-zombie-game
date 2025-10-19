@@ -1,9 +1,10 @@
-[gd_scene load_steps=24 format=3 uid="uid://hbytjywv1vm8"]
+[gd_scene load_steps=25 format=3 uid="uid://hbytjywv1vm8"]
 
 [ext_resource type="Texture2D" uid="uid://if0i4kwaoqx5" path="res://assets/undeadMobs/Basic Undead Animations/Carcass Feeder/CarcassFeeder.png" id="1_83dsq"]
 [ext_resource type="Script" uid="uid://cew758q335wxj" path="res://scenes/enemy.gd" id="1_w34ly"]
 [ext_resource type="Texture2D" uid="uid://p2p5q8cym5gk" path="res://assets/undeadMobs/Basic Undead Animations/Bound Cadaver/BoundCadaver.png" id="2_vpriy"]
 [ext_resource type="Texture2D" uid="uid://b12x3klc3itol" path="res://assets/undeadMobs/Basic Undead Animations/Ghastly Eye/GhastlyEye.png" id="3_whmg2"]
+[ext_resource type="AudioStream" uid="uid://cpxxjeiavjkmo" path="res://assets/brackeys_platformer_assets/sounds/hurt.wav" id="5_c4w8v"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bclmw"]
 atlas = ExtResource("2_vpriy")
@@ -169,6 +170,10 @@ disabled = true
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_pvk18")
 disabled = true
+
+[node name="hit" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("5_c4w8v")
 
 [connection signal="area_entered" from="hitboxEnemy" to="." method="_on_hitbox_enemy_area_entered"]
 [connection signal="area_exited" from="hitboxEnemy" to="." method="_on_hitbox_enemy_area_exited"]

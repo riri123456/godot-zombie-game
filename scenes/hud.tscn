@@ -12,7 +12,7 @@ events = [SubResource("InputEventAction_fll2u")]
 script = ExtResource("1_836p8")
 
 [node name="WaveTimer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 30.0
 
 [node name="CollectionTimer" type="Timer" parent="."]
 one_shot = true
@@ -26,7 +26,7 @@ offset_bottom = 324.0
 theme_override_font_sizes/font_size = 50
 text = "TIME BEFORE UNDEAD ATTACK: "
 
-[node name="Message" type="Label" parent="."]
+[node name="Title" type="Label" parent="."]
 custom_minimum_size = Vector2(480, 2.08165e-12)
 anchors_preset = 8
 anchor_left = 0.5
@@ -129,6 +129,62 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 50
 
+[node name="quit" type="Button" parent="."]
+process_mode = 3
+visible = false
+offset_left = 728.0
+offset_top = 696.0
+offset_right = 1224.0
+offset_bottom = 898.0
+theme_override_font_sizes/font_size = 60
+text = "QUIT GAME"
+
+[node name="settings" type="Button" parent="."]
+process_mode = 3
+visible = false
+offset_left = 720.0
+offset_top = 240.0
+offset_right = 1225.0
+offset_bottom = 453.0
+theme_override_font_sizes/font_size = 60
+text = "SETTINGS"
+
+[node name="Brightness" type="HSlider" parent="."]
+process_mode = 3
+visible = false
+offset_left = 736.0
+offset_top = 232.0
+offset_right = 1176.0
+offset_bottom = 424.0
+
+[node name="Volume" type="HSlider" parent="."]
+visible = false
+offset_left = 736.0
+offset_top = 632.0
+offset_right = 1184.0
+offset_bottom = 792.0
+
+[node name="brightnessTag" type="Label" parent="."]
+visible = false
+offset_left = 792.0
+offset_top = 240.0
+offset_right = 1224.0
+offset_bottom = 344.0
+theme_override_font_sizes/font_size = 40
+text = "BRIGHTNESS:"
+
+[node name="volumeTag" type="Label" parent="."]
+visible = false
+offset_left = 816.0
+offset_top = 640.0
+offset_right = 1080.0
+offset_bottom = 736.0
+theme_override_font_sizes/font_size = 40
+text = "VOLUME:"
+
 [connection signal="timeout" from="CollectionTimer" to="." method="_on_collection_timer_timeout"]
 [connection signal="pressed" from="startButton" to="." method="_on_start_button_pressed"]
 [connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]
+[connection signal="pressed" from="quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="settings" to="." method="_on_settings_pressed"]
+[connection signal="value_changed" from="Volume" to="." method="_on_volume_value_changed"]

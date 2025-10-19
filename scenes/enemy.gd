@@ -37,6 +37,8 @@ func _on_hitbox_enemy_area_entered(area):
 	if area.name != 'Gemmouse' and area.name != 'hitboxEnemy' and area.name != 'wallColl':
 		#print(area.name)
 		apply_knockback(area.global_position)
+		if !$hit.playing:
+			$hit.play()
 		
 
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:

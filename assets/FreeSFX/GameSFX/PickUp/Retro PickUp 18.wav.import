@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://j0bpb123ffpw"
+path="res://.godot/imported/Retro PickUp 18.wav-0da9a59778f09605d415f4cedd37e5a7.sample"
+
+[deps]
+
+source_file="res://assets/FreeSFX/GameSFX/PickUp/Retro PickUp 18.wav"
+dest_files=["res://.godot/imported/Retro PickUp 18.wav-0da9a59778f09605d415f4cedd37e5a7.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
