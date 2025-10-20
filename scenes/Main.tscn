@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://btwygw8uf2qjj"]
+[gd_scene load_steps=19 format=4 uid="uid://btwygw8uf2qjj"]
 
 [ext_resource type="Script" uid="uid://pbvt3psojm5g" path="res://scenes/Main.gd" id="1_842s1"]
 [ext_resource type="Texture2D" uid="uid://ynqubvv88yan" path="res://assets/Pixel Lands Forest Demo/forest_demo_objects.png" id="1_nf3p7"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://cwxspd8lu6ifb" path="res://scenes/Gem.tscn" id="7_buolf"]
 [ext_resource type="AudioStream" uid="uid://ctw1fqleuafxr" path="res://assets/brackeys_platformer_assets/music/time_for_adventure.mp3" id="10_lhr70"]
 [ext_resource type="AudioStream" uid="uid://c5yrm3htvy0q4" path="res://assets/brackeys_platformer_assets/sounds/coin.wav" id="11_wp0k4"]
+[ext_resource type="AudioStream" uid="uid://0a5yyj6yyu7v" path="res://assets/Rpg BackGround Music Pack/City Veil.ogg" id="12_bjd11"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2hef3"]
 texture = ExtResource("1_nf3p7")
@@ -258,26 +259,36 @@ shape = SubResource("RectangleShape2D_lhr70")
 
 [node name="Premusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_lhr70")
+pitch_scale = 1.15
 autoplay = true
+bus = &"Music"
 
 [node name="GemBuy" type="AudioStreamPlayer" parent="."]
 process_mode = 3
 stream = ExtResource("11_wp0k4")
 
+[node name="PostMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_bjd11")
+bus = &"Music"
+
 [connection signal="EnemyDied" from="." to="HUD" method="_on_main_enemy_dead"]
 [connection signal="child_exiting_tree" from="." to="." method="_on_child_exiting_tree"]
 [connection signal="child_exiting_tree" from="." to="." method="_on_exiting_tree"]
 [connection signal="game_paused" from="." to="HUD" method="_on_main_game_paused"]
+[connection signal="gameover" from="." to="Gem" method="_on_main_gameover"]
 [connection signal="tree_chopped" from="." to="HUD" method="_on_main_tree_chopped"]
 [connection signal="wall_built" from="." to="HUD" method="_on_main_wall_built"]
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
 [connection signal="hit" from="Player" to="HUD" method="Onhit"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
 [connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
+[connection signal="brightness_changed" from="HUD" to="." method="_on_hud_brightness_changed"]
 [connection signal="collectionTimer" from="HUD" to="." method="_on_collection_timer"]
+[connection signal="music_changed" from="HUD" to="." method="_on_hud_music_changed"]
 [connection signal="next_wave" from="HUD" to="." method="next_wave"]
 [connection signal="next_wave" from="HUD" to="Gem" method="_on_hud_next_wave"]
 [connection signal="quit_game" from="HUD" to="." method="_on_hud_quit_game"]
+[connection signal="resumed" from="HUD" to="." method="_on_hud_resumed"]
 [connection signal="start_button" from="HUD" to="." method="_on_hud_start_button"]
 [connection signal="start_game" from="HUD" to="." method="new_game"]
 [connection signal="start_game" from="HUD" to="Gem" method="_on_hud_start_game"]

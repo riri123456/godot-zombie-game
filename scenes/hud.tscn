@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dvpbpyqh1rbbn"]
+[gd_scene load_steps=5 format=3 uid="uid://dvpbpyqh1rbbn"]
 
 [ext_resource type="Script" uid="uid://dgxgbam6x3fnh" path="res://scenes/hud.gd" id="1_836p8"]
+[ext_resource type="AudioStream" uid="uid://dj6jiahhec2m0" path="res://assets/RPG_Essentials_Free/10_UI_Menu_SFX/001_Hover_01.wav" id="2_oo0fn"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_fll2u"]
 action = &"start_game"
@@ -15,6 +16,7 @@ script = ExtResource("1_836p8")
 wait_time = 30.0
 
 [node name="CollectionTimer" type="Timer" parent="."]
+wait_time = 10.0
 one_shot = true
 
 [node name="CollectionTime" type="Label" parent="."]
@@ -52,11 +54,12 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -100.0
-offset_top = -100.0
-offset_right = 100.0
+offset_left = -280.0
+offset_top = -152.0
+offset_right = 328.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_font_sizes/font_size = 50
 shortcut = SubResource("Shortcut_r3xks")
 text = "START
 "
@@ -156,13 +159,20 @@ offset_left = 736.0
 offset_top = 232.0
 offset_right = 1176.0
 offset_bottom = 424.0
+max_value = 1.0
+step = 0.001
+value = 1.0
 
 [node name="Volume" type="HSlider" parent="."]
+process_mode = 3
 visible = false
 offset_left = 736.0
 offset_top = 632.0
 offset_right = 1184.0
 offset_bottom = 792.0
+max_value = 1.0
+step = 0.001
+value = 1.0
 
 [node name="brightnessTag" type="Label" parent="."]
 visible = false
@@ -182,9 +192,49 @@ offset_bottom = 736.0
 theme_override_font_sizes/font_size = 40
 text = "VOLUME:"
 
+[node name="unpause" type="Button" parent="."]
+process_mode = 3
+visible = false
+offset_left = 184.0
+offset_top = 128.0
+offset_right = 504.0
+offset_bottom = 264.0
+theme_override_font_sizes/font_size = 40
+text = "RESUME GAME"
+
+[node name="ui" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_oo0fn")
+
+[node name="music" type="HSlider" parent="."]
+process_mode = 3
+visible = false
+offset_left = 752.0
+offset_top = 888.0
+offset_right = 1184.0
+offset_bottom = 912.0
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="musicTag" type="Label" parent="."]
+visible = false
+anchors_preset = -1
+anchor_right = 0.025
+anchor_bottom = 0.059
+offset_left = 808.0
+offset_top = 816.0
+offset_right = 1024.0
+offset_bottom = 807.28
+theme_override_font_sizes/font_size = 40
+text = "MUSIC:"
+
 [connection signal="timeout" from="CollectionTimer" to="." method="_on_collection_timer_timeout"]
 [connection signal="pressed" from="startButton" to="." method="_on_start_button_pressed"]
 [connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]
 [connection signal="pressed" from="quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="settings" to="." method="_on_settings_pressed"]
+[connection signal="changed" from="Brightness" to="." method="_on_brightness_changed"]
+[connection signal="value_changed" from="Brightness" to="." method="_on_brightness_value_changed"]
 [connection signal="value_changed" from="Volume" to="." method="_on_volume_value_changed"]
+[connection signal="pressed" from="unpause" to="." method="_on_unpause_pressed"]
+[connection signal="value_changed" from="music" to="." method="_on_music_value_changed"]

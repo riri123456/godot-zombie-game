@@ -69,7 +69,7 @@ theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_fonts/font = SubResource("SystemFont_o8oug")
 theme_override_font_sizes/font_size = 7
 text = "WOULD YOU LIKE TO PURCHASE 
-5 HEALTH FOR 5 WOOD"
+5 HEALTH FOR 10 WOOD"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(2, 1.9375)

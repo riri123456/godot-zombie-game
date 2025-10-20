@@ -678,7 +678,6 @@ shape = SubResource("RectangleShape2D_7p301")
 
 [node name="attack" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_tuyoq")
-volume_db = -4.0
 
 [node name="walking" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_qlg0r")

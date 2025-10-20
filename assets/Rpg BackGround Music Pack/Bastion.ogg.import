@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c00xbn76fcgk6"
+path="res://.godot/imported/Bastion.ogg-9f83fc274405642181c554c016670168.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Rpg BackGround Music Pack/Bastion.ogg"
+dest_files=["res://.godot/imported/Bastion.ogg-9f83fc274405642181c554c016670168.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

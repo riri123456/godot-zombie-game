@@ -22,11 +22,14 @@ func show_game_over():
 	$health.hide()
 	$Score.hide()
 	$Wood.hide()
+	wave = 0
+	
 	# Wait until the MessageTimer has counted down.
 	await $MessageTimer.timeout
 
 	$Title.text = "ZOMBIE GAME"
 	$Title.show()
+	$quit.show()
 	# Make a one-shot timer and wait for it to finish.
 	await get_tree().create_timer(1.0).timeout
 	$startButton.show()
@@ -34,6 +37,7 @@ func show_game_over():
 
 signal start_button
 func _on_start_button_pressed():
+	$quit.hide()
 	start_button.emit()
 	health = 100
 	wood = 0
@@ -104,10 +108,10 @@ func _on_gem_wave_done() -> void:
 
 
 func _on_gem_health_buy() -> void:
-	if health <= 100 and wood >= 5:
+	if health < 100 and wood >= 10:
 		health += 5
 		$health.text = "HEALTH: " + str(health)
-		wood -= 5
+		wood -= 10
 		$Wood.text = 'WOOD: ' + str(wood)
 
 
@@ -121,6 +125,9 @@ func _on_main_game_paused() -> void:
 	$WaveTimerMsg.hide()
 	$quit.show()
 	$settings.show()
+	$unpause.show()
+
+		
 	
 	
 
@@ -130,11 +137,44 @@ func _on_quit_pressed() -> void:
 
 
 func _on_settings_pressed() -> void:
+	$ui.play()
 	$quit.hide()
 	$settings.hide()
 	$Brightness.show()
-
+	$Volume.show()
+	$brightnessTag.show()
+	$volumeTag.show()
+	$music.show()
+	$musicTag.show()
+	
 signal volume_changed
 func _on_volume_value_changed(value: float):
-	pass
-	#volume_changed.emit(value: float)
+	volume_changed.emit(value)
+	
+signal brightness_changed
+func _on_brightness_value_changed(value: float) -> void:
+	brightness_changed.emit(value)
+	
+signal music_changed
+func _on_music_value_changed(value: float) -> void:
+	music_changed.emit(value)
+
+
+
+
+signal resumed
+func _on_unpause_pressed() -> void:
+	$ui.play()
+	resumed.emit()
+	$settings.hide()
+	$Brightness.hide()
+	$Volume.hide()
+	$brightnessTag.hide()
+	$volumeTag.hide()
+	$unpause.hide()
+	$quit.hide()
+	$health.show()
+	$Score.show()
+	$Wood.show()
+	$music.hide()
+	$musicTag.hide()

@@ -17,29 +17,38 @@ var prevWall: Node2D = null
 @onready var wave : int = 0
 @onready var mob_counter : int
 @onready var waveMulti : int = 5
+@onready var gamePaused : bool = false
 
 
 func _process(delta: float) -> void:
 	game_over()
 	pause_game()
+
 	
 signal game_paused
+signal game_unpaused
 func pause_game():
-	if gameStart == true and Input.is_action_pressed('ui_cancel'):
+	if gameStart == true and Input.is_action_just_released('ui_cancel') and gamePaused == false:
 		get_tree().paused = true
 		modulate.a = 0.2
 		game_paused.emit()
-		
 
+func _on_hud_resumed() -> void:
+	get_tree().paused = false
+	modulate.a = 1
+	
 		
-
+signal gameover
 func game_over():
 	if health == 0 or health < 0:
+		$MobTimer.wait_time = 2.5
+		gameover.emit()
 		gameStart = false
 		$MobTimer.stop()
 		$HUD.show_game_over()
 		$Gem.hide()
 		$Player.hide()
+		$PostMusic.stop()
 		health = 100
 		killCount = 0
 		gem_health = 100
@@ -53,9 +62,9 @@ func game_over():
 		
 func new_game():  
 	wave += 1
-	#print('new game wave is ' + str(wave))
 	gameStart = true
 	$Premusic.stop()
+	$PostMusic.play()
 	$MobTimer.start()
 	$HUD.show_message("Get Ready")
 	$Player.show()
@@ -168,7 +177,7 @@ func _on_exiting_tree(node: Node) -> void:
 func _on_gem_health_buy() -> void:
 	if health < 99 and wood >= 5:
 		health += 5
-		wood -= 5
+		wood -= 10
 		$GemBuy.play()
 
 
@@ -177,4 +186,14 @@ func _on_hud_quit_game() -> void:
 
 
 func _on_hud_volume_changed(value: float) -> void:
-	$GemBuy.volume_db == value
+	var Volume = AudioServer.get_bus_index('Master')
+	AudioServer.set_bus_volume_db(Volume, linear_to_db(value))
+
+
+func _on_hud_brightness_changed(value: float) -> void:
+	$".".modulate = Color(value, value, value, value)
+
+
+func _on_hud_music_changed(value: float) -> void:
+	var music = AudioServer.get_bus_index('Music')
+	AudioServer.set_bus_volume_db(music, linear_to_db(value))

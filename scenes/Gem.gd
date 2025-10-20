@@ -111,3 +111,8 @@ func _on_gem_store_pressed() -> void:
 
 	
 	
+
+
+func _on_main_gameover() -> void:
+	$progressIncrease.stop()
+	$progressIncrease.wait_time = 2.0

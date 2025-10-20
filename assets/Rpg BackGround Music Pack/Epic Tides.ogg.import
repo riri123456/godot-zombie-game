@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cpnmiat6ao2um"
+path="res://.godot/imported/Epic Tides.ogg-d73c2da31e1b12a15f2db5f5d29e24f7.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Rpg BackGround Music Pack/Epic Tides.ogg"
+dest_files=["res://.godot/imported/Epic Tides.ogg-d73c2da31e1b12a15f2db5f5d29e24f7.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
