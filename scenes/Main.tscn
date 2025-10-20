@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://cwxspd8lu6ifb" path="res://scenes/Gem.tscn" id="7_buolf"]
 [ext_resource type="AudioStream" uid="uid://ctw1fqleuafxr" path="res://assets/brackeys_platformer_assets/music/time_for_adventure.mp3" id="10_lhr70"]
 [ext_resource type="AudioStream" uid="uid://c5yrm3htvy0q4" path="res://assets/brackeys_platformer_assets/sounds/coin.wav" id="11_wp0k4"]
-[ext_resource type="AudioStream" uid="uid://0a5yyj6yyu7v" path="res://assets/Rpg BackGround Music Pack/City Veil.ogg" id="12_bjd11"]
+[ext_resource type="AudioStream" path="res://assets/Rpg BackGround Music Pack/City Veil.ogg" id="12_bjd11"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2hef3"]
 texture = ExtResource("1_nf3p7")
