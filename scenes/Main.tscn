@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://cwxspd8lu6ifb" path="res://scenes/Gem.tscn" id="7_buolf"]
 [ext_resource type="AudioStream" uid="uid://ctw1fqleuafxr" path="res://assets/brackeys_platformer_assets/music/time_for_adventure.mp3" id="10_lhr70"]
 [ext_resource type="AudioStream" uid="uid://c5yrm3htvy0q4" path="res://assets/brackeys_platformer_assets/sounds/coin.wav" id="11_wp0k4"]
-[ext_resource type="AudioStream" path="res://assets/Rpg BackGround Music Pack/City Veil.ogg" id="12_bjd11"]
+[ext_resource type="AudioStream" uid="uid://de8a10plnwv66" path="res://assets/City Veil.ogg" id="12_bjd11"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2hef3"]
 texture = ExtResource("1_nf3p7")
@@ -212,12 +212,8 @@ limit_top = -312
 limit_right = 785
 limit_bottom = 345
 
-[node name="StartTimer" type="Timer" parent="."]
-wait_time = 2.0
-one_shot = true
-
 [node name="MobTimer" type="Timer" parent="."]
-wait_time = 2.5
+wait_time = 3.0
 
 [node name="StartPosition" type="Marker2D" parent="."]
 position = Vector2(74, -31)
@@ -271,19 +267,18 @@ stream = ExtResource("11_wp0k4")
 stream = ExtResource("12_bjd11")
 bus = &"Music"
 
-[connection signal="EnemyDied" from="." to="HUD" method="_on_main_enemy_dead"]
 [connection signal="child_exiting_tree" from="." to="." method="_on_child_exiting_tree"]
 [connection signal="child_exiting_tree" from="." to="." method="_on_exiting_tree"]
+[connection signal="enemy_died" from="." to="HUD" method="_on_main_enemy_dead"]
+[connection signal="game_over_signal" from="." to="HUD" method="show_game_over"]
+[connection signal="game_over_signal" from="." to="Gem" method="_on_main_gameover"]
 [connection signal="game_paused" from="." to="HUD" method="_on_main_game_paused"]
-[connection signal="gameover" from="." to="Gem" method="_on_main_gameover"]
 [connection signal="tree_chopped" from="." to="HUD" method="_on_main_tree_chopped"]
 [connection signal="wall_built" from="." to="HUD" method="_on_main_wall_built"]
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
 [connection signal="hit" from="Player" to="HUD" method="Onhit"]
-[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
 [connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
 [connection signal="brightness_changed" from="HUD" to="." method="_on_hud_brightness_changed"]
-[connection signal="collectionTimer" from="HUD" to="." method="_on_collection_timer"]
 [connection signal="music_changed" from="HUD" to="." method="_on_hud_music_changed"]
 [connection signal="next_wave" from="HUD" to="." method="next_wave"]
 [connection signal="next_wave" from="HUD" to="Gem" method="_on_hud_next_wave"]
@@ -294,7 +289,6 @@ bus = &"Music"
 [connection signal="start_game" from="HUD" to="Gem" method="_on_hud_start_game"]
 [connection signal="volume_changed" from="HUD" to="." method="_on_hud_volume_changed"]
 [connection signal="Gemhit" from="Gem" to="." method="_on_gem_gemhit"]
-[connection signal="gemProgIncr" from="Gem" to="." method="_on_gem_gem_prog_incr"]
 [connection signal="health_buy" from="Gem" to="." method="_on_gem_health_buy"]
 [connection signal="health_buy" from="Gem" to="HUD" method="_on_gem_health_buy"]
 [connection signal="mouseEnter" from="Gem" to="." method="_on_gem_mouse_enter"]

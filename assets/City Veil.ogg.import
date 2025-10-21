@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/City Veil.ogg-3d732c7db5c8dd879ddf8c7ca417436
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

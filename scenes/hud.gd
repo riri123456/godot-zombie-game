@@ -2,10 +2,9 @@ extends CanvasLayer
 
 signal start_game
 
-@onready var health : int = 100
-@onready var wood : int = 0
-@onready var wave : int = 0
-@onready var waveMulti : int = 5
+var health : int = 100
+var wood : int = 0
+var wave : int = 0
 
 
 func _process(_delta):
@@ -24,13 +23,12 @@ func show_game_over():
 	$Wood.hide()
 	wave = 0
 	
-	# Wait until the MessageTimer has counted down.
 	await $MessageTimer.timeout
 
 	$Title.text = "ZOMBIE GAME"
 	$Title.show()
 	$quit.show()
-	# Make a one-shot timer and wait for it to finish.
+	# Make a timer and wait for finish.
 	await get_tree().create_timer(1.0).timeout
 	$startButton.show()
 	
@@ -43,12 +41,10 @@ func _on_start_button_pressed():
 	wood = 0
 	wave += 1
 	$Wood.text = 'WOOD: ' + str(wood)
-	Main.killCount = 0
+	Main.kill_count = 0
 	$health.text = 'HEALTH: ' + str(health)
-	$Score.text = 'SCORE: ' + str(Main.killCount) 
+	$Score.text = 'SCORE: ' + str(Main.kill_count) 
 	$CollectionTimer.start()
-	#var collectionTime = $CollectionTimer.time_left
-	#$CollectionTime.text = 'TIME BEFORE UNDEAD ATTACK: ' + str($CollectionTimer.time_left)
 	$startButton.hide()
 	$Title.hide()
 	$health.show()
@@ -84,13 +80,13 @@ func _on_main_tree_chopped() -> void:
 
 
 func _on_main_wall_built() -> void:
-	wood -= 2
+	wood -= 3
 	$Wood.text = 'WOOD: ' + str(wood)
 
 
 
-func _on_main_enemy_dead(killCount: int):
-	$Score.text = 'SCORE: ' + str(killCount)
+func _on_main_enemy_dead(kill_count: int):
+	$Score.text = 'SCORE: ' + str(kill_count)
 
 signal next_wave
 func _on_gem_wave_done() -> void:
@@ -99,6 +95,7 @@ func _on_gem_wave_done() -> void:
 	await get_tree().create_timer(4.0).timeout
 	$WaveMessage.hide()
 	$WaveTimer.start()
+	$SkipWaveTimer.show()
 	$WaveTimerMsg.show()
 	await $WaveTimer.timeout
 	$WaveTimerMsg.hide()
@@ -116,7 +113,6 @@ func _on_gem_health_buy() -> void:
 
 
 func _on_main_game_paused() -> void:
-	#get_tree().paused = true
 	$health.hide()
 	$Score.hide()
 	$Wood.hide()
@@ -127,9 +123,6 @@ func _on_main_game_paused() -> void:
 	$settings.show()
 	$unpause.show()
 
-		
-	
-	
 
 signal quit_game
 func _on_quit_pressed() -> void:
@@ -160,8 +153,6 @@ func _on_music_value_changed(value: float) -> void:
 	music_changed.emit(value)
 
 
-
-
 signal resumed
 func _on_unpause_pressed() -> void:
 	$ui.play()
@@ -178,3 +169,12 @@ func _on_unpause_pressed() -> void:
 	$Wood.show()
 	$music.hide()
 	$musicTag.hide()
+
+
+func _on_skip_wave_timer_pressed() -> void:
+	$WaveTimer.stop()
+	$WaveTimerMsg.hide()
+	next_wave.emit()
+	wave += 1
+	$SkipWaveTimer.hide()
+	

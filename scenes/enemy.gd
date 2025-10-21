@@ -1,7 +1,7 @@
 extends RigidBody2D
 class_name Enemy
 
-@onready var destination = Vector2(0, 0)
+var destination = Vector2(0, 0)
 @export var speed = 80
 @export var knockback_strength: float = 300.0
 @export var velocity_threshold: float = 10.0
@@ -11,7 +11,6 @@ func _ready():
 	$AnimatedSprite2D.animation = mob_types.pick_random()
 	CollisionSetter()
 	linear_damp = 5.0
-	#print(is_connected("EnemyDead", $Hud, "EnemyDead"))
 	
 	
 func _on_visible_on_screen_notifier_2d_screen_exited():
@@ -35,7 +34,6 @@ func _on_hitbox_enemy_area_entered(area):
 	if area.name == 'Sword':
 		queue_free()
 	if area.name != 'Gemmouse' and area.name != 'hitboxEnemy' and area.name != 'wallColl':
-		#print(area.name)
 		apply_knockback(area.global_position)
 		if !$hit.playing:
 			$hit.play()

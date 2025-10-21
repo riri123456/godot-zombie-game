@@ -3,54 +3,55 @@ extends Node2D
 @export var enemy_scene : PackedScene
 @export var wall_scene : PackedScene
 @export var preview_wall : PackedScene
-@onready var health : int = 100
-@onready var killCount : int = 0
-@onready var gem_health : int = 100
-@onready var inGem : bool = false
-@onready var gameStart : bool = false
-@onready var beforeGame : bool = true
+var health : int = 100
+var kill_count : int = 0
+var gem_health : int = 100
+var mouse_in_gem : bool = false
+var game_start : bool = false
+var before_game : bool = true
 @onready var tree_scene = preload('res://scenes/tree.tscn')
-@onready var wood : int = 0
-@onready var building_mode : bool = false
-@onready var preview_wall_node : bool = false
-var prevWall: Node2D = null
-@onready var wave : int = 0
-@onready var mob_counter : int
-@onready var waveMulti : int = 5
-@onready var gamePaused : bool = false
+var wood : int = 0
+var building_mode : bool = false
+var preview_wall_instance: Node2D = null
+var wave : int = 0
+var mob_counter : int
+var wave_multiplier : int = 5
+var game_paused_bool : bool = false
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	game_over()
 	pause_game()
 
 	
 signal game_paused
-signal game_unpaused
 func pause_game():
-	if gameStart == true and Input.is_action_just_released('ui_cancel') and gamePaused == false:
+	if game_start and Input.is_action_just_released('ui_cancel') and !game_paused_bool:
+		print('hello')
 		get_tree().paused = true
 		modulate.a = 0.2
 		game_paused.emit()
+		game_paused_bool = true
 
 func _on_hud_resumed() -> void:
 	get_tree().paused = false
 	modulate.a = 1
+	game_paused_bool = false
 	
 		
-signal gameover
+signal game_over_signal
 func game_over():
-	if health == 0 or health < 0:
-		$MobTimer.wait_time = 2.5
-		gameover.emit()
-		gameStart = false
+	if health <= 0:
+		$MobTimer.wait_time = 3.0
+		game_over_signal.emit()
+		game_start = false
 		$MobTimer.stop()
 		$HUD.show_game_over()
 		$Gem.hide()
 		$Player.hide()
 		$PostMusic.stop()
 		health = 100
-		killCount = 0
+		kill_count = 0
 		gem_health = 100
 		wood = 0
 		wave = 0
@@ -62,7 +63,9 @@ func game_over():
 		
 func new_game():  
 	wave += 1
-	gameStart = true
+	print(wave)
+	game_start = true
+	print(game_start)
 	$Premusic.stop()
 	$PostMusic.play()
 	$MobTimer.start()
@@ -92,7 +95,7 @@ func tree_spawn():
 			var tree = tree_scene.instantiate()
 			var tree_location_x = randf_range(-505, 760)
 			var tree_location_y = randf_range(-295, 330)
-			tree.position = Vector2i(tree_location_x, tree_location_y)
+			tree.position = Vector2(tree_location_x, tree_location_y)
 			tree.name = 'Trees'
 			add_child(tree)
 
@@ -104,9 +107,8 @@ func _on_mob_timer_timeout():
 	mob_spawn_location.progress_ratio = randf()
 	mob.position = mob_spawn_location.position
 	mob.speed += wave*2 + 4
-	#print(mob.speed)
 	add_child(mob)
-	waveMulti = int(5 * pow(2, wave - 1))
+	wave_multiplier = int(5 * pow(2, wave - 1))
 		
 		
 func _on_player_hit():
@@ -117,42 +119,42 @@ func _on_gem_gemhit():
 	
 func start_build():
 	building_mode = true
-	prevWall = preview_wall.instantiate()
-	add_child(prevWall)
-	prevWall.global_position = get_global_mouse_position()
+	preview_wall_instance = preview_wall.instantiate()
+	add_child(preview_wall_instance)
+	preview_wall_instance.global_position = get_global_mouse_position()
 	
 func confirm_build():
 	var wall = wall_scene.instantiate()
-	wall.global_position = prevWall.global_position
-	wall.rotation = prevWall.rotation
+	wall.global_position = preview_wall_instance.global_position
+	wall.rotation = preview_wall_instance.rotation
 	add_child(wall)
-	wood -= 2
+	wood -= 3
 
 signal wall_built
 func _input(event: InputEvent) -> void:
 	if event.is_action_released("Build"):
-		if not building_mode and not inGem and not beforeGame and wood > 1:
+		if !building_mode and !mouse_in_gem and !before_game and wood > 1:
 			start_build()
-		elif building_mode and not inGem and not beforeGame and wood > 1:
+		elif building_mode and !mouse_in_gem and !before_game and wood > 1:
 			confirm_build()
 			wall_built.emit()
 	elif event.is_action_pressed('wall rotation') and building_mode == true:
-		prevWall.rotation_degrees += 90.0
+		preview_wall_instance.rotation_degrees += 90.0
 	elif event.is_action_pressed('delete_build') and building_mode == true:
-		prevWall.queue_free()
+		preview_wall_instance.queue_free()
 		building_mode = false
 		
 		
 		
 func _on_gem_mouse_exit():
-	inGem = false
+	mouse_in_gem = false
 
 func _on_gem_mouse_enter():
-	inGem = true
+	mouse_in_gem = true
 
 
 func _on_hud_start_button():
-	beforeGame = false
+	before_game = false
 	$Player.start($StartPosition.position)
 	wood = 0
 	tree_spawn()
@@ -165,17 +167,16 @@ func _on_child_exiting_tree(node: Node) -> void:
 		tree_count -= 1
 		wood += 5
 
-signal EnemyDied(killCount : int)
-signal end_wave
+signal enemy_died(killCount : int)
 func _on_exiting_tree(node: Node) -> void:
-	waveMulti = int(5 * pow(2, wave - 1))
+	wave_multiplier = int(5 * pow(2, wave - 1))
 	if node.is_in_group('mobs'):
-		killCount += 1
-		EnemyDied.emit(killCount)
+		kill_count += 1
+		enemy_died.emit(kill_count)
 
 
 func _on_gem_health_buy() -> void:
-	if health < 99 and wood >= 5:
+	if health < 99 and wood >= 10:
 		health += 5
 		wood -= 10
 		$GemBuy.play()
@@ -186,8 +187,8 @@ func _on_hud_quit_game() -> void:
 
 
 func _on_hud_volume_changed(value: float) -> void:
-	var Volume = AudioServer.get_bus_index('Master')
-	AudioServer.set_bus_volume_db(Volume, linear_to_db(value))
+	var volume = AudioServer.get_bus_index('Master')
+	AudioServer.set_bus_volume_db(volume, linear_to_db(value))
 
 
 func _on_hud_brightness_changed(value: float) -> void:

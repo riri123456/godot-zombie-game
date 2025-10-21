@@ -228,6 +228,15 @@ offset_bottom = 807.28
 theme_override_font_sizes/font_size = 40
 text = "MUSIC:"
 
+[node name="SkipWaveTimer" type="Button" parent="."]
+visible = false
+offset_left = 720.0
+offset_top = 968.0
+offset_right = 1252.0
+offset_bottom = 1064.0
+theme_override_font_sizes/font_size = 40
+text = "SKIP TO NEXT WAVE"
+
 [connection signal="timeout" from="CollectionTimer" to="." method="_on_collection_timer_timeout"]
 [connection signal="pressed" from="startButton" to="." method="_on_start_button_pressed"]
 [connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]
@@ -238,3 +247,4 @@ text = "MUSIC:"
 [connection signal="value_changed" from="Volume" to="." method="_on_volume_value_changed"]
 [connection signal="pressed" from="unpause" to="." method="_on_unpause_pressed"]
 [connection signal="value_changed" from="music" to="." method="_on_music_value_changed"]
+[connection signal="pressed" from="SkipWaveTimer" to="." method="_on_skip_wave_timer_pressed"]
